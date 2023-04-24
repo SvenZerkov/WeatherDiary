@@ -1,4 +1,4 @@
-Weather diary (project description) 
+# Weather diary (project description) 
  
 
 An open weather service is selected, from which the ready dataset is used.  
@@ -17,4 +17,4 @@ The user has a (limited) opportunity to update information, add new comments and
 
 User cannot update the weather forecast –database. 
 
-# JS | MongoDB | CSS | HTML | handlebars | node.js | express
+##  JS | MongoDB | CSS | HTML | handlebars | node.js | express
