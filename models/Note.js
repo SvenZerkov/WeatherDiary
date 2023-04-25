@@ -3,7 +3,7 @@ types of variables might still change */
 const mongoose = require("mongoose");
 
 const noteSchema = new mongoose.Schema({
-    date: Date,
+    date: String,
     temperature: Number,
     comment: String
 });

@@ -1,77 +1,87 @@
 <div class="container">
   <h1>Weather Diary</h1>
-  
+
   {{#if desc}}
-    <p>{{desc}}</p>
+  <p>{{desc}}</p>
   {{else}}
-    <p>No content</p>
+  <p>No content</p>
   {{/if}}
 
-    <div class="row">
-        <div class="col-sm-6">
-            <h2>Weather history DATE</h2>
-            <table class="table table-bordered">
-            <thead>
-                <tr>
-                {{#each products}}
-                <th>{{this.name}}</th>
-                {{/each}}
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                {{#each products}}
-                <td>Price {{this.price}} €</td>
-                {{/each}}
-                </tr>
-            </tbody>
-            </table>
-        </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <h2>Weather history DATE</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Temperature</th>
+            <th>Comments</th>
+          </tr>
 
-        <div class="col-sm-6">
-            <h2>Personal entries DATE</h2>
-            <table class="table table-bordered">
-            <thead>
-                <tr>
-                <th>Temperature</th>
-                <th>Comments</th>
-                <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                <td>4.8 &#8451;</td>
-                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
-                <td><input type="button" class="btn btn-primary" value="Update"><br><br>
-                <input type="button" class="btn btn-danger" value="Delete"></td>
-                </tr>
-            </tbody>
-            </table>
-        </div>
+        </thead>
+        <tbody>
+          {{#each UserNotes}}
+          
+          <tr>
+            <td>{{this.date}}</td>
+            <td>{{this.temperature}}</td>
+            <td>{{this.comment}}</td>
+          </tr>
+          {{/each}}
+          
+        </tbody>
+      </table>
     </div>
-  
+
+    <div class="col-sm-6">
+      <h2>Personal entries DATE</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Temperature</th>
+            <th>Comments</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>4.8 &#8451;</td>
+            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+              ea commodo consequat.</td>
+            <td><input type="button" class="btn btn-primary" value="Update"><br><br>
+              <input type="button" class="btn btn-danger" value="Delete">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="col-sm-4"></div>
   <div class="col-sm-12 personaldiaryentry">
     <h3>Personal diary entries</h3>
 
     <form action="#">
-    <table class="table table-bordered">
+      <table class="table table-bordered">
         <thead>
-            <tr>
+          <tr>
             <th><label for="date">Date</label></th>
             <th><label for="temperature">Temperature</label></th>
             <th><label for="comment">Comments</label></th>
-            </tr>
+          </tr>
         </thead>
         <tbody>
-            <tr>
+          <tr>
             <td><input type="date" id="date" name="date"></td>
             <td><input type="number" id="temperature" name="temperature" value="4.8 &#8451;"></td>
-            <td><input type="text" id="comment" name="comment" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."></td>
-            </tr>
+            <td><input type="text" id="comment" name="comment"
+                value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.">
+            </td>
+          </tr>
         </tbody>
-    </table>
-    <input type="submit" value="Submit">
+      </table>
+      <input type="submit" value="Submit">
     </form>
   </div>
 
