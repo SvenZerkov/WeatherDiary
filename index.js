@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 require('dotenv').config();
+const path = require("path");
 
 const app = express();
 
@@ -13,7 +14,8 @@ let products = [
 
 
 app.engine('handlebars', exphbs.engine({
-    defaultLayout: 'main'
+    defaultLayout: 'main',
+    partialsDir: path.join(__dirname, "views/partials")
 }));
 
 app.set('view engine', 'handlebars');
@@ -30,6 +32,12 @@ app.get('/', (req, res) => {
         products : products
     });
 })
+
+/* app.delete("/api/notes/:id", (req,res) {
+    const id = req.params.id;
+
+    const noteIndex = notes.findIndex( =>)
+}) */
 
 
 
