@@ -7,7 +7,7 @@ const Note = require("./models/Note");
 const app = express();
 
 
-
+app.use(express.urlencoded({ extended: false }));
 
 app.engine('handlebars', exphbs.engine({
     defaultLayout: 'main',
@@ -21,20 +21,17 @@ app.set('view engine', 'handlebars');
 //Tietokantaan yhdistäminen
 
 const dbURI = 'mongodb+srv://Team12:WeatherDiary2023@weatherdiary.fssyihy.mongodb.net/UserNotes?retryWrites=true&w=majority';
-    /* Rosan tekemä yhdistys
-    mongoose.connect(dbURI)
-    .then(result => console.log("success")); */
 
-    (async () => {
-        try {
-            await mongoose.connect(dbURI);
-            console.log("Database connected");
-            const PORT = process.env.PORT || 3000;
-            app.listen(PORT, () => console.log(`Server up and running. Listening port ${PORT}`));
-        } catch (error) {
-            console.log(error); // change this later to log in file
-        }
-    })();
+(async () => {
+    try {
+        await mongoose.connect(dbURI);
+        console.log("Database connected");
+        const PORT = process.env.PORT || 3000;
+        app.listen(PORT, () => console.log(`Server up and running. Listening port ${PORT}`));
+    } catch (error) {
+        console.log(error); // change this later to log in file
+    }
+})();
 
 app.get('/', async (req, res) => {
     const UserNotes = await Note.find();
@@ -47,21 +44,28 @@ app.get('/', async (req, res) => {
         });
 });
 
-// DELETE santeri
-/* app.delete("/api/notes/:id", async (req, res) => {
-    const id = Number(req.params.id);
+// DELETE santeri --- id not found ----
+app.delete("/api/notes/:id", async (req, res) => {
+    const id = req.params.id.toString();
+    
 
-    const noteIndex = .findIndex(product => product.id === id);
-    if (noteIndex !== -1) {
-        products.splice(noteIndex, 1);
-        // res the rest of the documents back
-        res.json(products);
-    } else {
-        res.status(404).json({
-            msg: "Product not found"
-        })
+    console.log(id);
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ msg: 'Invalid ID' });
+      }
+
+    try {
+        const delNote = await Note.findById(id);
+        if (delNote) {
+            console.log(delNote);
+            res.json({ msg: `Note ${delNote} deleted succesfully` })
+        } else {
+            res.status(404).json({ msg: `Note on id ${id} not found` })
+        }
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
     }
-}); */
+});
 
 
 
