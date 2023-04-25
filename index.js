@@ -33,11 +33,21 @@ app.get('/', (req, res) => {
     });
 })
 
-/* app.delete("/api/notes/:id", (req,res) {
-    const id = req.params.id;
+// DELETE santeri
+app.delete("/api/notes/:id", (req,res) => { // add here async - await when db connection
+    const id = Number(req.params.id);
 
-    const noteIndex = notes.findIndex( =>)
-}) */
+    const noteIndex = products.findIndex(product => product.id === id);
+    if (noteIndex !== -1) {
+        products.splice(noteIndex, 1);
+        // res the rest of the documents back
+        res.json(products);
+    } else {
+        res.status(404).json({
+            msg: "Product not found"
+        })
+    }
+});
 
 
 
