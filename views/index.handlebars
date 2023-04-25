@@ -1,30 +1,78 @@
 <div class="container">
   <h1>Weather Diary</h1>
-  <p>Welcome!</p>
-  <form action="">
+  
+  {{#if desc}}
+    <p>{{desc}}</p>
+  {{else}}
+    <p>No content</p>
+  {{/if}}
+
+    <div class="row">
+        <div class="col-sm-6">
+            <h2>Historia PVM</h2>
+            <table class="table table-bordered">
+            <thead>
+                <tr>
+                {{#each products}}
+                <th>{{this.name}}</th>
+                {{/each}}
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                {{#each products}}
+                <td>Price {{this.price}} €</td>
+                {{/each}}
+                </tr>
+            </tbody>
+            </table>
+        </div>
+
+        <div class="col-sm-6">
+            <h2>Omat merkinnät PVM</h2>
+            <table class="table table-bordered">
+            <thead>
+                <tr>
+                <th>Temperature</th>
+                <th>Comments</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td>4.8 &#8451;</td>
+                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
+                <td><input type="button" class="btn btn-primary" value="Update"><br><br>
+                <input type="button" class="btn btn-danger" value="Delete"></td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+    </div>
+  
+  <div class="col-sm-4"></div>
+  <div class="col-sm-12 personaldiaryentry">
+    <h3>Personal diary entries</h3>
+
+    <form action="#">
     <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Name</th>
-          <th>Weather</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><input type="date" name="Date"></td>
-          <td><input type="text" id="name" name="name"></td>
-          <td>
-            <input type="checkbox" id="checkbox1" name="checkbox1" value="Rainy">
-            <label for="checkbox1"> Rainy</label><br>
-            <input type="checkbox" id="checkbox2" name="checkbox2" value="Snowy">
-            <label for="checkbox2"> Snowy</label><br>
-            <input type="checkbox" id="checkbox3" name="checkbox3" value="Sunny">
-            <label for="checkbox3"> Sunny</label>
-          </td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+            <th><label for="date">Date</label></th>
+            <th><label for="temperature">Temperature</label></th>
+            <th><label for="comment">Comments</label></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+            <td><input type="date" id="date" name="date"></td>
+            <td><input type="number" id="temperature" name="temperature" value="4.8 &#8451;"></td>
+            <td><input type="text" id="comment" name="comment" value="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."></td>
+            </tr>
+        </tbody>
     </table>
     <input type="submit" value="Submit">
-  </form>
+    </form>
+  </div>
+
 </div>
