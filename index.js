@@ -6,11 +6,7 @@ const path = require("path");
 
 const app = express();
 
-// Dummy "database"
-let products = [   
-    { id: 1, name: 'Chair', price: 100 },   
-    { id: 2, name: 'Table', price: 200 }   
-];
+
 
 
 app.engine('handlebars', exphbs.engine({
@@ -19,6 +15,14 @@ app.engine('handlebars', exphbs.engine({
 }));
 
 app.set('view engine', 'handlebars');
+
+//Tietokantaan yhdistäminen
+
+const dbURI = 'mongodb+srv://Team12:WeatherDiary2023@weatherdiary.fssyihy.mongodb.net/UserNotes?retryWrites=true&w=majority'
+
+mongoose.connect(dbURI)
+.then(result => console.log("success"));
+
 
 app.use(express.static('public'));
 app.use("", require("./routes/notes.js"));
