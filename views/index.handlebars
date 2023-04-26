@@ -76,8 +76,7 @@
           <tr>
             <td><input type="date" id="date" name="date"></td>
             <td><input type="number" id="temperature" name="temperature" value="4.8 &#8451;"></td>
-            <td><input type="text" id="comment" name="comment"
-                value="">
+            <td><input type="text" id="comment" name="comment" value="">
             </td>
           </tr>
         </tbody>
@@ -86,49 +85,23 @@
     </form>
   </div>
 
+
+
   {{!-- script for event listener on deleteButton --}}
-
   <script>
-    /*
-    const Confirm = (title, msg, $true, $false) => {
-      const $content = `<div class='dialog-overlay'>
-                      <div class='dialog'>
-                        <header>
-                          <h3>${title}</h3>
-                          <i class='fa fa-close'></i>
-                        </header>
-                        <div class='dialog-msg'>
-                          <p>${msg}</p>
-                        </div>
-                        <footer>
-                          <div class='controls'>
-                            <button class='button button-danger doAction'>${$true}</button>
-                            <button class='button button-default cancelAction'>${$false}</button>
-                          </div>
-                        </footer>
-                      </div>
-                    </div>`;
-      $('body').prepend($content);
 
-      $('.doAction').click((event) => {
-        const confirmationMsg = "<h1>Confirmed</h1>";
-        $(".dialog-msg").append(confirmationMsg);
-        $(event.target).parents('.dialog-overlay').fadeOut(700, () => {
-          $(event.target).remove();
-        });
-      });
-      $('.cancelAction, .fa-close').click((event) => {
-        $(event.target).parents('.dialog-overlay').fadeOut(500, () => {
-          $(event.target).remove();
-        });
-      });
-    }
+    const deleteNote = () => {
+      console.log("Note deleted.");
+    };
 
-    $("#deleteNoteButton").click(() => {
-      Confirm('Delete confirmation', 'Are you sure you want to delete current note', 'Yes', 'Cancel');
-    }); 
-    */
+    const deleteButton = document.getElementById("deleteNoteButton");
 
+    deleteButton.addEventListener("click", () => {
+      const confirmation = confirm("Are you sure you want to delete this note?");
+      if (confirmation) {
+        deleteNote();
+      }
+    });
   </script>
 
 </div>
