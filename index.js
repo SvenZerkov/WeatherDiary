@@ -47,7 +47,6 @@ app.get('/', async (req, res) => {
 // get all
 app.get("/api/notes/", async (req, res) => {
 
-    console.log("test");
     try {
         const notes = await Note.find();
 
@@ -63,7 +62,7 @@ app.get("/api/notes/", async (req, res) => {
 app.get("/api/notes/(:id)", async (req, res) => {
 
     try {
-        
+
         const id = req.params.id;
 
         const note = await Note.findById(id);
@@ -87,6 +86,7 @@ app.delete("/api/notes/(:id)", async (req, res) => {
     }
 
     try {
+        
         // test findById to check logs
         const delNote = await Note.findById(id);
         // const delNote = await Note.findByIdAndDelete(id);

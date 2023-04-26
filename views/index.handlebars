@@ -21,14 +21,14 @@
         </thead>
         <tbody>
           {{#each UserNotes}}
-          
+
           <tr>
             <td>{{this.date}}</td>
             <td>{{this.temperature}}</td>
             <td>{{this.comment}}</td>
           </tr>
           {{/each}}
-          
+
         </tbody>
       </table>
     </div>
@@ -50,7 +50,8 @@
               dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
               ea commodo consequat.</td>
             <td><input type="button" class="btn btn-primary" value="Update"><br><br>
-              <input type="button" class="btn btn-danger" value="Delete">
+              <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
+                value="Delete">
             </td>
           </tr>
         </tbody>
@@ -84,5 +85,50 @@
       <input type="submit" value="Submit">
     </form>
   </div>
+
+  {{!-- script for event listener on deleteButton --}}
+
+  <script>
+    /*
+    const Confirm = (title, msg, $true, $false) => {
+      const $content = `<div class='dialog-overlay'>
+                      <div class='dialog'>
+                        <header>
+                          <h3>${title}</h3>
+                          <i class='fa fa-close'></i>
+                        </header>
+                        <div class='dialog-msg'>
+                          <p>${msg}</p>
+                        </div>
+                        <footer>
+                          <div class='controls'>
+                            <button class='button button-danger doAction'>${$true}</button>
+                            <button class='button button-default cancelAction'>${$false}</button>
+                          </div>
+                        </footer>
+                      </div>
+                    </div>`;
+      $('body').prepend($content);
+
+      $('.doAction').click((event) => {
+        const confirmationMsg = "<h1>Confirmed</h1>";
+        $(".dialog-msg").append(confirmationMsg);
+        $(event.target).parents('.dialog-overlay').fadeOut(700, () => {
+          $(event.target).remove();
+        });
+      });
+      $('.cancelAction, .fa-close').click((event) => {
+        $(event.target).parents('.dialog-overlay').fadeOut(500, () => {
+          $(event.target).remove();
+        });
+      });
+    }
+
+    $("#deleteNoteButton").click(() => {
+      Confirm('Delete confirmation', 'Are you sure you want to delete current note', 'Yes', 'Cancel');
+    }); 
+    */
+
+  </script>
 
 </div>
