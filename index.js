@@ -44,6 +44,21 @@ app.get('/', async (req, res) => {
         });
 });
 
+// get all
+app.get("/api/notes/", async (req, res) => {
+
+    console.log("test");
+    try {
+        const notes = await Note.find();
+
+        res.json(notes);
+    } catch (error) {
+        res.status(404).json({
+            msg: "Not found"
+        })
+    }
+});
+
 // get one
 app.get("/api/notes/(:id)", async (req, res) => {
 
@@ -59,8 +74,6 @@ app.get("/api/notes/(:id)", async (req, res) => {
             msg: "Not found"
         })
     }
-
-
 });
 
 // DELETE santeri 
@@ -74,11 +87,12 @@ app.delete("/api/notes/(:id)", async (req, res) => {
     }
 
     try {
-        // console.log("start finding")
-        const delNote = await Note.findByIdAndDelete(id);
+        // test findById to check logs
+        const delNote = await Note.findById(id);
+        // const delNote = await Note.findByIdAndDelete(id);
         if (delNote) {
             // console.log(delNote);
-            res.json({ msg: `Note ${delNote} deleted succesfully` })
+            res.json({ msg: `Note-> date: ${delNote.date}, temperature: ${delNote.temperature}, comment: '${delNote.comment}' deleted succesfully` })
         } else {
             res.status(404).json({ msg: `Note on id ${id} not found` })
         }
