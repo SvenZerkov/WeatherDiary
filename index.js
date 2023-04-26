@@ -63,21 +63,21 @@ app.get("/api/notes/(:id)", async (req, res) => {
 
 });
 
-// DELETE santeri --- id not found ----
+// DELETE santeri 
 app.delete("/api/notes/(:id)", async (req, res) => {
     const id = req.params.id;
 
 
     console.log(id);
     if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ msg: 'Invalid ID' });
+        return res.status(400).json({ msg: 'Invalid ID. Not ObjectId' });
     }
 
     try {
-        console.log("start finding")
+        // console.log("start finding")
         const delNote = await Note.findByIdAndDelete(id);
         if (delNote) {
-            console.log(delNote);
+            // console.log(delNote);
             res.json({ msg: `Note ${delNote} deleted succesfully` })
         } else {
             res.status(404).json({ msg: `Note on id ${id} not found` })
