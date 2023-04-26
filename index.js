@@ -5,7 +5,7 @@ require('dotenv').config();
 const path = require("path");
 const Note = require("./models/Note");
 const app = express();
-
+const ObjectId = mongoose.Types.ObjectId;
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -44,18 +44,38 @@ app.get('/', async (req, res) => {
         });
 });
 
+// get one
+app.get("/api/notes/(:id)", async (req, res) => {
+
+    try {
+        
+        const id = req.params.id;
+
+        const note = await Note.findById(id);
+
+        res.json(note);
+    } catch (error) {
+        res.status(404).json({
+            msg: "Not found"
+        })
+    }
+
+
+});
+
 // DELETE santeri --- id not found ----
-app.delete("/api/notes/:id", async (req, res) => {
-    const id = req.params.id.toString();
-    
+app.delete("/api/notes/(:id)", async (req, res) => {
+    const id = req.params.id;
+
 
     console.log(id);
     if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ msg: 'Invalid ID' });
-      }
+    }
 
     try {
-        const delNote = await Note.findById(id);
+        console.log("start finding")
+        const delNote = await Note.findByIdAndDelete(id);
         if (delNote) {
             console.log(delNote);
             res.json({ msg: `Note ${delNote} deleted succesfully` })
@@ -66,6 +86,8 @@ app.delete("/api/notes/:id", async (req, res) => {
         res.status(500).json({ msg: error.message });
     }
 });
+
+
 
 
 
