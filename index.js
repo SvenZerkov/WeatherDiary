@@ -103,6 +103,27 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 
 
 
+// CREATE Rosa
+
+app.get("views/partials/index", (req, res) => {
+    res.render("/index");
+});
+app.post("/api/notes/", async (req, res) => {
+
+try {
+    const newNote = new Note (req.body);
+    await newNote.save();
+    res.redirect("/");
+}
+
+catch (error) {
+    res.status(500).json({ msg: error.message });
+}
+
+});
+
+
+
 
 
 
