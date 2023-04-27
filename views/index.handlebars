@@ -81,7 +81,8 @@
           <tr>
             {{!-- <td><input type="date" id="date" name="date"></td> --}}
             <td><p class="datevalue"></p></td>
-            <td><input type="number" id="temperature" name="temperature" value="4.8 &#8451;"></td>
+            <td>
+<input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1" required></td>
             <td><input type="text" id="comment" name="comment" value="">
             </td>
           </tr>
@@ -162,4 +163,22 @@ function showChosenDay() {
 }
 
   </script>
+
+
+  {{!-- Temperature-kentän validointi - Lämpötilan on oltava -80 ja 50 välillä. --}}
+  <script>
+  const form = document.querySelector('form');
+  const temperatureInput = document.getElementById('temperature');
+  const temperatureFalse = document.getElementById('temperature-false');
+
+  form.addEventListener('submit', (event) => {
+    if (!temperatureInput.checkValidity()) {
+      temperatureFalse.style.display = 'block';
+      event.preventDefault();
+    } else {
+      temperatureFalse.style.display = 'none';
+    }
+  });
+</script>
+
 </div>
