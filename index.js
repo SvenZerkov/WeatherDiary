@@ -106,6 +106,9 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 // CREATE Rosa
 
 
+
+
+
 app.post("/api/notes/", async (req, res) => {
 
 try {
