@@ -2,118 +2,96 @@
 
 <div class="container">
 
-
+ 
   <h1>Weather Diary</h1>
 
   {{#if desc}}
   <p>{{desc}}</p>
+  <button onclick="showChosenDay()">View</button>
+  <p><form action="/api/notes/" method="post">
+  <label for="date">Choose date: </label><br> 
+  <input type="date" id="date" name="date">
+  </p>
   {{else}}
   <p>No content</p>
   {{/if}}
 
-  <body>
+  <div class="row">
+    <div class="col-sm-6">
+      <h3>Weather history</h3> <p class="datevalue"></p>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Temperature</th>
+          </tr>
 
-
-    <div class="row">
-      <div class="col-sm-6">
-        <h2>Weather history DATE</h2>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Temperature</th>
-              <th>Comments</th>
-            </tr>
-
-          </thead>
-          <tbody>
-            {{#each UserNotes}}
-
-            <tr>
-              <td>{{this.date}}</td>
-              <td>{{this.temperature}}</td>
-              <td>{{this.comment}}</td>
-            </tr>
-            {{/each}}
-
-          </tbody>
-        </table>
-      </div>
-
-      <div class="col-sm-6">
-        <h2>Personal entries DATE</h2>
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Temperature</th>
-              <th>Comments</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>4.8 &#8451;</td>
-              <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex
-                ea commodo consequat.</td>
-              <td><input type="button" class="btn btn-primary" value="Update"><br><br>
-                <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
-                  value="Delete">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        </thead>
+        <tbody>
+          <tr>
+            <td>date</td>
+            <td>Tähän dataa open-meteosta &#8451;</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="col-sm-4"></div>
-    <div class="col-sm-12 personaldiaryentry">
-      <h3>Personal diary entries</h3>
+    <div class="col-sm-6">
+      <h3>Personal entries</h3> <p class="datevalue"></p>
+      <table id="scrollbar-table" class="table table-bordered">
+        <thead id="scrollbar-thead">
+          <tr>
+            <th>Date</th>
+            <th>Temperature</th>
+            <th>Comments</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="scrollbar-tbody">
+          {{#each UserNotes}}
+          <tr>
+            <td>{{this.date}}</td>
+            <td>{{this.temperature}} &#8451;</td>
+            <td>{{this.comment}}</td>
 
-      <form action="/api/notes/" method="post">
-        <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th><label for="date">Date</label></th>
-              <th><label for="temperature">Temperature</label></th>
-              <th><label for="comment">Comments</label></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="date" id="date" name="date"></td>
-              <td><input type="number" id="temperature" name="temperature" value="4.8 &#8451;"></td>
-              <td><input type="text" id="comment" name="comment" value="">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <input type="submit" value="Submit">
-      </form>
+            <td><input type="button" class="btn btn-primary" value="Update"><br><br>
+              <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
+                value="Delete">
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="col-sm-4"></div>
+  <div class="col-sm-12 personaldiaryentry">
+    <h3>Personal diary entries</h3>
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th><label for="temperature">Temperature</label></th>
+            <th><label for="comment">Comments</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {{!-- <td><input type="date" id="date" name="date"></td> --}}
+            <td><p class="datevalue"></p></td>
+            <td><input type="number" id="temperature" name="temperature" value="4.8 &#8451;"></td>
+            <td><input type="text" id="comment" name="comment" value="">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <input type="submit" value="Submit">
+    </form>
     </div>
 
 
-    <div id="confirm-delete" class="modal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title">Confirm deletion</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-          <div class="modal-body">
-            <p class="message"></p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger yes-delete">Yes</button>
-            <button type="button" class="btn btn-default no-delete" data-dismiss="modal">No</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </body>
   {{!-- script for event listener on deleteButton --}}
 
 
@@ -157,13 +135,31 @@
         console.log("Deletion canceled.");
       });
     });
-    /*
-        deleteButton.addEventListener("click", function () {
-          console.log("Delete button clicked");
-        }); */
 
+    // Script for showing chosen day in html
 
+function showChosenDay() {
+  let MyDate = document.getElementById("date").value;
+  //console.log(MyDate);
 
+  // slicing the date, to show in right format
+  let year = String(MyDate).slice(0,4);
+  //console.log(year);
+
+  let month = String(MyDate).slice(5,7);
+  //console.log(month);
+
+  let day = String(MyDate).slice(8,10);
+  //console.log(day);
+
+  let formatDate = day + "." + month + "." + year;
+  //console.log(formatDate);
+
+  const collection = document.getElementsByClassName("datevalue");
+  collection[0].innerHTML = formatDate;
+  collection[1].innerHTML = formatDate;
+  collection[2].innerHTML = formatDate;
+}
 
   </script>
 </div>
