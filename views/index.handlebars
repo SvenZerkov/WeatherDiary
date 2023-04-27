@@ -7,57 +7,59 @@
 
   {{#if desc}}
   <p>{{desc}}</p>
+  <button onclick="showChosenDay()">View</button>
+  <p><form action="/api/notes/" method="post">
+  <label for="date">Choose date: </label><br> 
+  <input type="date" id="date" name="date">
+  </p>
   {{else}}
   <p>No content</p>
   {{/if}}
 
   <div class="row">
     <div class="col-sm-6">
-      <h2>Weather history DATE</h2>
+      <h3>Weather history</h3> <p class="datevalue"></p>
       <table class="table table-bordered">
         <thead>
           <tr>
             <th>Date</th>
             <th>Temperature</th>
-            <th>Comments</th>
           </tr>
 
         </thead>
         <tbody>
-          {{#each UserNotes}}
-
           <tr>
-            <td>{{this.date}}</td>
-            <td>{{this.temperature}}</td>
-            <td>{{this.comment}}</td>
+            <td>date</td>
+            <td>Tähän dataa open-meteosta &#8451;</td>
           </tr>
-          {{/each}}
-
         </tbody>
       </table>
     </div>
 
     <div class="col-sm-6">
-      <h2>Personal entries DATE</h2>
-      <table class="table table-bordered">
-        <thead>
+      <h3>Personal entries</h3> <p class="datevalue"></p>
+      <table id="scrollbar-table" class="table table-bordered">
+        <thead id="scrollbar-thead">
           <tr>
+            <th>Date</th>
             <th>Temperature</th>
             <th>Comments</th>
             <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="scrollbar-tbody">
+          {{#each UserNotes}}
           <tr>
-            <td>4.8 &#8451;</td>
-            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-              ea commodo consequat.</td>
+            <td>{{this.date}}</td>
+            <td>{{this.temperature}} &#8451;</td>
+            <td>{{this.comment}}</td>
+
             <td><input type="button" class="btn btn-primary" value="Update"><br><br>
               <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
                 value="Delete">
             </td>
           </tr>
+          {{/each}}
         </tbody>
       </table>
     </div>
@@ -67,18 +69,18 @@
   <div class="col-sm-12 personaldiaryentry">
     <h3>Personal diary entries</h3>
 
-    <form action="/api/notes/" method="post">
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th><label for="date">Date</label></th>
+            <th>Date</th>
             <th><label for="temperature">Temperature</label></th>
             <th><label for="comment">Comments</label></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><input type="date" id="date" name="date"></td>
+            {{!-- <td><input type="date" id="date" name="date"></td> --}}
+            <td><p class="datevalue"></p></td>
             <td><input type="number" id="temperature" name="temperature" value="4.8 &#8451;"></td>
             <td><input type="text" id="comment" name="comment" value="">
             </td>
@@ -106,6 +108,33 @@
         deleteNote();
       }
     });
+
+
+// Script for showing chosen day in html
+
+function showChosenDay() {
+  let MyDate = document.getElementById("date").value;
+  //console.log(MyDate);
+
+  // slicing the date, to show in right format
+  let year = String(MyDate).slice(0,4);
+  //console.log(year);
+
+  let month = String(MyDate).slice(5,7);
+  //console.log(month);
+
+  let day = String(MyDate).slice(8,10);
+  //console.log(day);
+
+  let formatDate = day + "." + month + "." + year;
+  //console.log(formatDate);
+
+  const collection = document.getElementsByClassName("datevalue");
+  collection[0].innerHTML = formatDate;
+  collection[1].innerHTML = formatDate;
+  collection[2].innerHTML = formatDate;
+}
+
   </script>
 
 </div>
