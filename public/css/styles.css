@@ -29,7 +29,7 @@ header {
 
 #scrollbar-tbody {
   display: block;
-  height: 50px;
+  height: 400px;
   overflow: auto;
 }
 #scrollbar-thead, #scrollbar-tbody tr {
