@@ -40,12 +40,12 @@ app.get('/', async (req, res) => {
         {
             pagetitle: "WeatherDiary",
             desc: "Welcome to the weather diary!",
-            UserNotes: UserNotes.map(usernote => usernote.toJSON())
+            UserNotes: UserNotes.map(usernote => usernote.toJSON()),
         });
 });
 
 // get all
-app.get("/api/notes/", async (req, res) => {
+/* app.get("/api/notes/", async (req, res) => {
 
     try {
         const notes = await Note.find();
@@ -56,10 +56,10 @@ app.get("/api/notes/", async (req, res) => {
             msg: "Not found"
         })
     }
-});
+}); */
 
 // get one
-app.get("/api/notes/(:id)", async (req, res) => {
+/* app.get("/api/notes/(:id)", async (req, res) => {
 
     try {
 
@@ -73,7 +73,7 @@ app.get("/api/notes/(:id)", async (req, res) => {
             msg: "Not found"
         })
     }
-});
+}); */
 
 // DELETE santeri 
 app.delete("/api/notes/(:id)", async (req, res) => {
@@ -137,7 +137,13 @@ fetch('https://archive-api.open-meteo.com/v1/archive?latitude=60.17&longitude=24
 .then ((data) => {
 
     const weatherInfo = data.daily;
+    const meanTemperature = weatherInfo.temperature_2m_mean;
+    const precipitationSum = weatherInfo.precipitation_sum;
+    const windspeedMax = weatherInfo.windspeed_10m_max;
 
     console.log(weatherInfo);
+    console.log(meanTemperature);
+    console.log(precipitationSum);
+    console.log(windspeedMax);
 });
 
