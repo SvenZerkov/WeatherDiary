@@ -128,5 +128,15 @@ app.use(function (req, res, next) {
 });
 
 
+// Testailua
 
+// Fetch data
 
+fetch('https://archive-api.open-meteo.com/v1/archive?latitude=60.17&longitude=24.94&start_date=2011-01-01&end_date=2011-01-01&daily=temperature_2m_mean,sunrise,sunset,precipitation_sum,windspeed_10m_max&timezone=Europe%2FMoscow&windspeed_unit=ms')
+.then ((response) => response.json())
+.then ((data) => {
+
+    const weatherInfo = data.daily;
+
+    console.log(weatherInfo);
+})
