@@ -105,9 +105,10 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 
 // CREATE Rosa
 
-app.get("views/partials/index", (req, res) => {
-    res.render("/index");
-});
+
+
+
+
 app.post("/api/notes/", async (req, res) => {
 
 try {
@@ -129,6 +130,14 @@ app.use(function (req, res, next) {
     res.status(404).render('404', {pagetitle: '404 Error'});
 });
 
+// Fetch data
 
+fetch('https://archive-api.open-meteo.com/v1/archive?latitude=60.17&longitude=24.94&start_date=2011-01-01&end_date=2011-01-01&daily=temperature_2m_mean,sunrise,sunset,precipitation_sum,windspeed_10m_max&timezone=Europe%2FMoscow&windspeed_unit=ms')
+.then ((response) => response.json())
+.then ((data) => {
 
+    const weatherInfo = data.daily;
+
+    console.log(weatherInfo);
+});
 
