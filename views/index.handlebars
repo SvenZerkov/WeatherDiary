@@ -176,11 +176,9 @@
   const deleteButton = document.getElementById("deleteNoteButton");
 
   deleteButton.addEventListener("click", () => {
-    // const confirmation = deleteConfirm("Do you want to delete the current note?");
     deleteConfirm("Do you want to delete the current note?")
-      .then(() => {
-        deleteNote();
-      }).catch((error) => {
+      .then(deleteNote())
+      .catch((error) => {
         if (error) {
           console.error(error);
         }
