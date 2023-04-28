@@ -39,7 +39,7 @@ app.get('/', async (req, res) => {
     res.render('index',
         {
             pagetitle: "WeatherDiary",
-            desc: "Welcome to the weather diary!",
+            desc: "At this website, you can view historical weather data for Helsinki and add your own personal notes regarding specific dates. Please note that the weather data from today and the past couple of days may be missing due to delays. We retrieve our weather information from the Open Meteo API. At the bottom of this page, you can enter your own comments. To begin, please select a date between January 1, 2000, and today. Once you have chosen your preferred date, click on the 'View' button.",
             UserNotes: UserNotes.map(usernote => usernote.toJSON()),
         });
 });

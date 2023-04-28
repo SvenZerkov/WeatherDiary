@@ -3,15 +3,21 @@
 <div class="container">
 
  
-  <h1>Weather Diary</h1>
+  {{!-- <h1>Weather Diary</h1> --}}
 
   {{#if desc}}
-  <p>{{desc}}</p>
-  <button onclick="showChosenDay()">View</button>
+  <p class="desc">{{desc}}</p>
+  
   <p><form action="/api/notes/" method="post">
-  <label for="date">Choose date: </label><br> 
-  <input type="date" id="date" name="date">
+  <div class="date-view-container">
+  <label for="date" class="label-lg">Choose date: </label>
+  {{!-- <span id="date-choose-between" class="invalid-date">Date must be between 1.1.2000 and today.</span><br> --}}
+  <input type="date" id="date" name="date" min="2000-01-01" max="" class="input-lg" />
+  <button type="button" onclick="showChosenDay()" class="btn btn-primary btn-lg">View</button>
+  </div>
   </p>
+
+
   {{else}}
   <p>No content</p>
   {{/if}}
@@ -64,7 +70,6 @@
       </table>
     </div>
   </div>
-
   <div class="col-sm-4"></div>
   <div class="col-sm-12 personaldiaryentry">
     <h3>Personal diary entries</h3>
@@ -81,9 +86,11 @@
           <tr>
             {{!-- <td><input type="date" id="date" name="date"></td> --}}
             <td><p class="datevalue"></p></td>
-            <td>
-            <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1"></td>
-            {{!-- <span id="temperature-between" class="invalid-temperature">between -80 and 50.</span> --}}
+         <td>
+            <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
+            <br>
+            <span id="temperature-false" class="invalid-temperature">Between -80 and 50.</span>
+        </td>
             <td>
             <input type="text" id="comment" name="comment" value="" maxlength="200">
             <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is 200.</span>
@@ -183,5 +190,12 @@ function showChosenDay() {
     }
   });
 </script>
+
+{{!-- Päivämäärän maksimiarvon asettaminen sivun lataamispäivään --}}
+<script>
+  const currentDate = new Date().toISOString().split("T")[0];
+  document.getElementById("date").setAttribute("max", currentDate);
+</script>
+
 
 </div>

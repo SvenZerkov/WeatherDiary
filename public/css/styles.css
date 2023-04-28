@@ -16,15 +16,63 @@ footer {
 }
 
 header {
-  height: 140px; 
   background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+}
+
+.header-text {
+  color: #fff;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .logo img {
   max-height: 100px; 
   width: auto; 
-  margin-top: 20px;
-  margin-left: 20px;
+}
+
+.btn-lg {
+  padding: 18px 30px;
+  font-size: 18px;
+  margin-left: 10px;
+}
+
+.label-lg {
+  font-size: 18px;
+  margin-right: 10px;
+}
+
+.input-lg {
+  padding: 30px 20px;
+  font-size: 18px;
+}
+
+p.desc {
+  font-size: 18px;
+  color:black;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.date-view-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 #scrollbar-tbody {
@@ -32,6 +80,7 @@ header {
   height: 400px;
   overflow: auto;
 }
+
 #scrollbar-thead, #scrollbar-tbody tr {
   display: table;
   width: 100%;
