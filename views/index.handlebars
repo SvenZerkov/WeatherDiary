@@ -74,7 +74,8 @@
               <td>{{this.temperature}} &#8451;</td>
               <td>{{this.comment}}</td>
 
-              <td><input type="button" class="btn btn-primary" value="Update"><br><br>
+              <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
+                  value="Update"><br><br>
                 <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
                   value="Delete">
               </td>
@@ -118,12 +119,12 @@
   </form>
 </div>
 
-{{!-- check delete modals close button --}}
+{{!-- delete modal --}}
 <div id="confirm-delete" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Confirm deletion</h4>
+        <h4 class="modal-title">Confirm delete</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       <div class="modal-body">
@@ -136,9 +137,8 @@
     </div>
   </div>
 </div>
+
 {{!-- script for event listener on deleteButton --}}
-
-
 <script>
   // dev section jquery test
   if (typeof jQuery == 'undefined') {
@@ -186,9 +186,15 @@
 
       });
   });
+</script>
 
-  // Script for showing chosen day in html
+{{!-- script for update button --}}
+<script>
 
+</script>
+
+{{!-- Script for showing chosen day in html --}}
+<script>
   function showChosenDay() {
     let MyDate = document.getElementById("date").value;
     //console.log(MyDate);
