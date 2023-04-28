@@ -95,6 +95,7 @@ app.get('/', async (req, res) => {
 }); */
 
 // DELETE santeri 
+
 app.delete("/api/notes/(:id)", async (req, res) => {
     const id = req.params.id;
 
@@ -124,10 +125,6 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 
 // CREATE Rosa
 
-
-
-
-
 app.post("/api/notes/", async (req, res) => {
 
 try {
@@ -149,6 +146,5 @@ app.use(function (req, res, next) {
     res.status(404).render('404', {pagetitle: '404 Error'});
 });
 
-
-
+// PATCH Santeri 
 
