@@ -2,36 +2,41 @@
 
 <div class="container">
 
- 
-  {{!-- <h1>Weather Diary</h1> --}}
+
+  <h1>Weather Diary</h1>
 
   {{#if desc}}
-  <p class="desc">{{desc}}</p>
-  
-  <p><form action="/api/notes/" method="post">
-  <div class="date-view-container">
-  <label for="date" class="label-lg">Choose date: </label>
-  {{!-- <span id="date-choose-between" class="invalid-date">Date must be between 1.1.2000 and today.</span><br> --}}
-  <input type="date" id="date" name="date" min="2000-01-01" max="" class="input-lg" />
-  <button type="button" onclick="showChosenDay()" class="btn btn-primary btn-lg">View</button>
-  </div>
-  </p>
+  <p>{{desc}}</p>
+  <button onclick="showChosenDay()">View</button>
+  <p>
+  <form action="/api/notes/" method="post">
+    <label for="date">Choose date: </label><br>
+    <input type="date" id="date" name="date">
+    </p>
+    {{else}}
+    <p>No content</p>
+    {{/if}}
 
+    <div class="row">
+      <div class="col-sm-6">
+        <h3>Weather history</h3>
+        <p class="datevalue"></p>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Temperature</th>
+            </tr>
 
-  {{else}}
-  <p>No content</p>
-  {{/if}}
-
-  <div class="row">
-    <div class="col-sm-6">
-      <h3>Weather history</h3> <p class="datevalue"></p>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temperature</th>
-          </tr>
-
+          </thead>
+          <tbody>
+            <tr>
+              <td>date</td>
+              <td>Tähän dataa open-meteosta &#8451;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
         </thead>
         <tbody>
        <tbody>
@@ -50,37 +55,38 @@
       </table>
     </div>
 
-    <div class="col-sm-6">
-      <h3>Personal entries</h3> <p class="datevalue"></p>
-      <table id="scrollbar-table" class="table table-bordered">
-        <thead id="scrollbar-thead">
-          <tr>
-            <th>Date</th>
-            <th>Temperature</th>
-            <th>Comments</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="scrollbar-tbody">
-          {{#each UserNotes}}
-          <tr>
-            <td>{{this.date}}</td>
-            <td>{{this.temperature}} &#8451;</td>
-            <td>{{this.comment}}</td>
+      <div class="col-sm-6">
+        <h3>Personal entries</h3>
+        <p class="datevalue"></p>
+        <table id="scrollbar-table" class="table table-bordered">
+          <thead id="scrollbar-thead">
+            <tr>
+              <th>Date</th>
+              <th>Temperature</th>
+              <th>Comments</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="scrollbar-tbody">
+            {{#each UserNotes}}
+            <tr>
+              <td>{{this.date}}</td>
+              <td>{{this.temperature}} &#8451;</td>
+              <td>{{this.comment}}</td>
 
-            <td><input type="button" class="btn btn-primary" value="Update"><br><br>
-              <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
-                value="Delete">
-            </td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
+              <td><input type="button" class="btn btn-primary" value="Update"><br><br>
+                <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
+                  value="Delete">
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-  <div class="col-sm-4"></div>
-  <div class="col-sm-12 personaldiaryentry">
-    <h3>Personal diary entries</h3>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-12 personaldiaryentry">
+      <h3>Personal diary entries</h3>
 
       <table class="table table-bordered">
         <thead>
@@ -93,98 +99,126 @@
         <tbody>
           <tr>
             {{!-- <td><input type="date" id="date" name="date"></td> --}}
-            <td><p class="datevalue"></p></td>
-         <td>
-            <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
-            <br>
-            <span id="temperature-false" class="invalid-temperature">Between -80 and 50.</span>
-        </td>
             <td>
-            <input type="text" id="comment" name="comment" value="" maxlength="200">
-            <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is 200.</span>
+              <p class="datevalue"></p>
+            </td>
+            <td>
+              <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
+            </td>
+            {{!-- <span id="temperature-between" class="invalid-temperature">between -80 and 50.</span> --}}
+            <td>
+              <input type="text" id="comment" name="comment" value="" maxlength="200">
+              <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
+                200.</span>
             </td>
           </tr>
         </tbody>
       </table>
       <input type="submit" value="Submit">
-    </form>
-    </div>
+  </form>
+</div>
 
 {{!-- check delete modals close button --}}
-  {{!-- script for event listener on deleteButton --}}
+<div id="confirm-delete" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm deletion</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="message"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger yes-delete">Yes</button>
+        <button type="button" class="btn btn-default no-delete" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- script for event listener on deleteButton --}}
 
 
-  <script>
-    if (typeof jQuery == 'undefined') {
-      console.log('jQuery is not loaded');
-    } else {
-      console.log('jQuery is loaded');
-    };
+<script>
+  // dev section jquery test
+  if (typeof jQuery == 'undefined') {
+    console.log('jQuery is not loaded');
+  } else {
+    console.log('jQuery is loaded');
+  };
 
-    const deleteConfirm = (msg) => {
-      return new Promise((resolve, reject) => {
-        const confirmBox = $("#confirm-delete");
-        confirmBox.find(".message").text(msg);
-        confirmBox.find(".yes-delete").click(() => {
-          confirmBox.hide();
-          resolve();
-        });
-        confirmBox.find(".no-delete").click(() => {
-          confirmBox.hide();
-          reject();
-        });
-        confirmBox.show();
+  const deleteConfirm = (msg) => {
+    return new Promise((resolve, reject) => {
+      const confirmBox = $("#confirm-delete");
+      confirmBox.find(".message").text(msg);
+      confirmBox.find(".yes-delete").click(() => {
+        confirmBox.hide();
+        resolve();
       });
-    };
-
-
-    const deleteNote = () => { // this func handles the deletion request
-      console.log("Note deleted.");
-      // send req to server to handle the delete
-    };
-
-    const deleteButton = document.getElementById("deleteNoteButton");
-
-    deleteButton.addEventListener("click", () => {
-      const confirmation = deleteConfirm("Do you want to delete the current note?");
-      deleteConfirm("Do you want to delete the current note?").then(() => {
-        deleteNote();
-        // send req to server to handle the delete
-      }).catch(() => {
-        console.log("Deletion canceled.");
+      confirmBox.find(".no-delete").click(() => {
+        confirmBox.hide();
+        reject();
       });
+      confirmBox.find(".close").click(() => {
+        confirmBox.hide();
+        reject();
+      })
+      confirmBox.show();
     });
-
-    // Script for showing chosen day in html
-
-function showChosenDay() {
-  let MyDate = document.getElementById("date").value;
-  //console.log(MyDate);
-
-  // slicing the date, to show in right format
-  let year = String(MyDate).slice(0,4);
-  //console.log(year);
-
-  let month = String(MyDate).slice(5,7);
-  //console.log(month);
-
-  let day = String(MyDate).slice(8,10);
-  //console.log(day);
-
-  let formatDate = day + "." + month + "." + year;
-  //console.log(formatDate);
-
-  const collection = document.getElementsByClassName("datevalue");
-  collection[0].innerHTML = formatDate;
-  collection[1].innerHTML = formatDate;
-  collection[2].innerHTML = formatDate;
-}
-
-  </script>
+  };
 
 
-  {{!-- Temperature-kentän validointi - Lämpötilan on oltava -80 ja 50 välillä. --}}
-  <script>
+  const deleteNote = () => {
+    console.log("Note deleted.");
+    // send req to server to handle the delete after ideing correct note
+  };
+
+  const deleteButton = document.getElementById("deleteNoteButton");
+
+  deleteButton.addEventListener("click", () => {
+    // const confirmation = deleteConfirm("Do you want to delete the current note?");
+    deleteConfirm("Do you want to delete the current note?")
+      .then(() => {
+        deleteNote();
+      }).catch((error) => {
+        if (error) {
+          console.error(error);
+        }
+        console.log("Deletion canceled.");
+
+      });
+  });
+
+  // Script for showing chosen day in html
+
+  function showChosenDay() {
+    let MyDate = document.getElementById("date").value;
+    //console.log(MyDate);
+
+    // slicing the date, to show in right format
+    let year = String(MyDate).slice(0, 4);
+    //console.log(year);
+
+    let month = String(MyDate).slice(5, 7);
+    //console.log(month);
+
+    let day = String(MyDate).slice(8, 10);
+    //console.log(day);
+
+    let formatDate = day + "." + month + "." + year;
+    //console.log(formatDate);
+
+    const collection = document.getElementsByClassName("datevalue");
+    collection[0].innerHTML = formatDate;
+    collection[1].innerHTML = formatDate;
+    collection[2].innerHTML = formatDate;
+  }
+
+</script>
+
+
+{{!-- Temperature-kentän validointi - Lämpötilan on oltava -80 ja 50 välillä. --}}
+<script>
   const form = document.querySelector('form');
   const temperatureInput = document.getElementById('temperature');
   const temperatureFalse = document.getElementById('temperature-false');
