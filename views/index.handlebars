@@ -70,12 +70,13 @@
           <tbody id="scrollbar-tbody">
             {{#each UserNotes}}
             <tr>
-              <td>{{this.date}}</td>
-              <td>{{this.temperature}} &#8451;</td>
-              <td>{{this.comment}}</td>
-
+              <div class="note">
+                <td>{{this.date}}</td>
+                <td>{{this.temperature}} &#8451;</td>
+                <td>{{this.comment}}</td>
+              </div>
               <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
-                  value="Update"><br><br>
+                  data-id="{{this._id}}" value="Update"><br><br>
                 <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
                   value="Delete">
               </td>
@@ -139,6 +140,19 @@
 </div>
 
 {{!-- update modal --}}
+<div id="updateNoteModal" class="modal">
+  <div class="modal-content">
+    <h4>Update Note</h4>
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <form id="updateNoteForm">
+      <input type="text" id="updateTitle" name="title" placeholder="Title" required>
+      <textarea id="updateBody" name="body" placeholder="Body" required></textarea>
+      <button type="submit">Update</button>
+    </form>
+  </div>
+</div>
+
+{{!-- update confirm modal --}}
 <div id="confirm-update" class="modal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -209,10 +223,12 @@
 
 {{!-- script for event listener on update button --}}
 <script>
+
+
   const updateConfirm = (msg) => {
     return new Promise((resolve, reject) => {
       const confirmBox = $("#confirm-update");
-      confirmBox.find(".message").text.(msg);
+      confirmBox.find(".message").text(msg);
       confirmBox.find(".yes-update").click(() => {
         confirmBox.hide();
         resolve();
@@ -231,9 +247,30 @@
   };
 
   const updateButton = document.getElementById("updateNoteButton");
+  /*
+  updateButton.addEventListener("click", async event => {
+    event.preventDefault();
+ 
+    const noteID = updateButton.dataset.id;
+    const note = await getNoteById(noteID);
+ 
+    const updateNoteForm = document.querySelector("#updateNoteForm");
+    updateNoteForm.title.value = note.title;
+    updateNoteForm.body.value = note.body;
+  });
+ 
+  const getNoteById = async (id) => {
+    const response = await fetch(`/api/notes/${id}`);
+    const note = await response.json();
+    return note;
+  };
+  */
 
-  updateButton.addEventListener("click", () => {
-    console.log("Update button clicked.");
+  updateButton.addEventListener("click", event => {
+    const noteId = event.target.dataset.id;
+    console.log(event.target);
+    console.log("Update button clicked.", noteId);
+
     /*
     updateConfirm("Do you want to update the current note?")
       .then(updateNote)
@@ -245,7 +282,7 @@
         }
 
       });
-      */
+    */
   });
 
 </script>

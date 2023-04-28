@@ -78,7 +78,7 @@ app.get('/', async (req, res) => {
 }); */
 
 // get one
-/* app.get("/api/notes/(:id)", async (req, res) => {
+app.get("/api/notes/(:id)", async (req, res, next) => {
 
     try {
 
@@ -92,7 +92,7 @@ app.get('/', async (req, res) => {
             msg: "Not found"
         })
     }
-}); */
+});
 
 // DELETE santeri 
 
@@ -106,7 +106,7 @@ app.delete("/api/notes/(:id)", async (req, res) => {
     }
 
     try {
-        
+
         // test findById to check logs
         const delNote = await Note.findById(id);
         // const delNote = await Note.findByIdAndDelete(id);
@@ -127,15 +127,15 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 
 app.post("/api/notes/", async (req, res) => {
 
-try {
-    const newNote = new Note (req.body);
-    await newNote.save();
-    res.redirect("/");
-}
+    try {
+        const newNote = new Note(req.body);
+        await newNote.save();
+        res.redirect("/");
+    }
 
-catch (error) {
-    res.status(500).json({ msg: error.message });
-}
+    catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
 
 });
 
@@ -143,8 +143,21 @@ catch (error) {
 // Error TOMI
 
 app.use(function (req, res, next) {
-    res.status(404).render('404', {pagetitle: '404 Error'});
+    res.status(404).render('404', { pagetitle: '404 Error' });
 });
 
 // PATCH Santeri 
+app.patch('/api/notes/:id', async(req, res, next) => {
+    try {
+      const note = await Note.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!note) {
+        return res.status(404).send();
+      }
+      res.send(note);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  });
+  
+
 
