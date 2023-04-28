@@ -138,6 +138,25 @@
   </div>
 </div>
 
+{{!-- update modal --}}
+<div id="confirm-update" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm update</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="message"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger yes-update">Yes</button>
+        <button type="button" class="btn btn-default no-update" data-dismiss="modal">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {{!-- script for event listener on deleteButton --}}
 <script>
   // dev section jquery test
@@ -162,7 +181,7 @@
       confirmBox.find(".close").click(() => {
         confirmBox.hide();
         reject();
-      })
+      });
       confirmBox.show();
     });
   };
@@ -177,19 +196,57 @@
 
   deleteButton.addEventListener("click", () => {
     deleteConfirm("Do you want to delete the current note?")
-      .then(deleteNote())
+      .then(deleteNote)
       .catch((error) => {
         if (error) {
           console.error(error);
+        } else {
+          console.log("Deletion canceled.");
         }
-        console.log("Deletion canceled.");
-
       });
   });
 </script>
 
-{{!-- script for update button --}}
+{{!-- script for event listener on update button --}}
 <script>
+  const updateConfirm = (msg) => {
+    return new Promise((resolve, reject) => {
+      const confirmBox = $("#confirm-update");
+      confirmBox.find(".message").text.(msg);
+      confirmBox.find(".yes-update").click(() => {
+        confirmBox.hide();
+        resolve();
+      });
+      confirmBox.find(".no-update").click(() => {
+        confirmBox.hide();
+        reject();
+      });
+      confirmBox.show();
+    });
+  };
+
+  const updateNote = () => {
+    console.log("note updated");
+    // send req to server for updating note
+  };
+
+  const updateButton = document.getElementById("updateNoteButton");
+
+  updateButton.addEventListener("click", () => {
+    console.log("Update button clicked.");
+    /*
+    updateConfirm("Do you want to update the current note?")
+      .then(updateNote)
+      .catch((error) => {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log("Update canceled.")
+        }
+
+      });
+      */
+  });
 
 </script>
 
