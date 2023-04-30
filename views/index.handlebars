@@ -37,86 +37,95 @@
           </tbody>
         </table>
       </div>
-        </thead>
-        <tbody>
-       <tbody>
-          <tr>
+      </thead>
+      <tbody>
+      <tbody>
+        <tr>
           <td>Temperature:</td>
-          <td>{{weatherDetails}}</td></tr>
-          <tr><td>Sunrise: </td>
-          <td>{{this.sunrise}}</td></tr>
-          <tr><td>Sunset: </td>
-          <td>{{weatherDetails.sunset}}</td></tr>
-          <tr><td>Precipitation: </td>
-          <td>{{this.precipitation}}</td></tr>
-          <tr><td>Windspeed: </td>
-          <td>{{this.windspeed}}</td></tr>
-        </tbody>
+          <td>{{weatherDetails}}</td>
+        </tr>
+        <tr>
+          <td>Sunrise: </td>
+          <td>{{this.sunrise}}</td>
+        </tr>
+        <tr>
+          <td>Sunset: </td>
+          <td>{{weatherDetails.sunset}}</td>
+        </tr>
+        <tr>
+          <td>Precipitation: </td>
+          <td>{{this.precipitation}}</td>
+        </tr>
+        <tr>
+          <td>Windspeed: </td>
+          <td>{{this.windspeed}}</td>
+        </tr>
+      </tbody>
       </table>
     </div>
 
-      <div class="col-sm-6">
-        <h3>Personal entries</h3>
-        <p class="datevalue"></p>
-        <table id="scrollbar-table" class="table table-bordered">
-          <thead id="scrollbar-thead">
-            <tr>
-              <th>Date</th>
-              <th>Temperature</th>
-              <th>Comments</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="scrollbar-tbody">
-            {{#each UserNotes}}
-            <tr>
-              <div class="note">
-                <td>{{this.date}}</td>
-                <td>{{this.temperature}} &#8451;</td>
-                <td>{{this.comment}}</td>
-              </div>
-              <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
-                  data-id="{{this._id}}" value="Update"><br><br>
-                <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
-                  value="Delete">
-              </td>
-            </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="col-sm-4"></div>
-    <div class="col-sm-12 personaldiaryentry">
-      <h3>Personal diary entries</h3>
-
-      <table class="table table-bordered">
-        <thead>
+    <div class="col-sm-6">
+      <h3>Personal entries</h3>
+      <p class="datevalue"></p>
+      <table id="scrollbar-table" class="table table-bordered">
+        <thead id="scrollbar-thead">
           <tr>
             <th>Date</th>
-            <th><label for="temperature">Temperature</label></th>
-            <th><label for="comment">Comments</label></th>
+            <th>Temperature</th>
+            <th>Comments</th>
+            <th></th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="scrollbar-tbody">
+          {{#each UserNotes}}
           <tr>
-            {{!-- <td><input type="date" id="date" name="date"></td> --}}
-            <td>
-              <p class="datevalue"></p>
-            </td>
-            <td>
-              <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
-            </td>
-            {{!-- <span id="temperature-between" class="invalid-temperature">between -80 and 50.</span> --}}
-            <td>
-              <input type="text" id="comment" name="comment" value="" maxlength="200">
-              <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
-                200.</span>
+            <div class="note">
+              <td>{{this.date}}</td>
+              <td>{{this.temperature}} &#8451;</td>
+              <td>{{this.comment}}</td>
+            </div>
+            <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
+                data-id="{{this._id}}" value="Update"><br><br>
+              <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
+                value="Delete">
             </td>
           </tr>
+          {{/each}}
         </tbody>
       </table>
-      <input type="submit" value="Submit">
+    </div>
+</div>
+<div class="col-sm-4"></div>
+<div class="col-sm-12 personaldiaryentry">
+  <h3>Personal diary entries</h3>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th><label for="temperature">Temperature</label></th>
+        <th><label for="comment">Comments</label></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {{!-- <td><input type="date" id="date" name="date"></td> --}}
+        <td>
+          <p class="datevalue"></p>
+        </td>
+        <td>
+          <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
+        </td>
+        {{!-- <span id="temperature-between" class="invalid-temperature">between -80 and 50.</span> --}}
+        <td>
+          <input type="text" id="comment" name="comment" value="" maxlength="200">
+          <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
+            200.</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="submit" value="Submit">
   </form>
 </div>
 
@@ -206,18 +215,22 @@
     // send req to server to handle the delete after ideing correct note
   };
 
-  const deleteButton = document.getElementById("deleteNoteButton");
+  const deleteButtons = document.querySelectorAll("#deleteNoteButton");
 
-  deleteButton.addEventListener("click", () => {
-    deleteConfirm("Do you want to delete the current note?")
-      .then(deleteNote)
-      .catch((error) => {
-        if (error) {
-          console.error(error);
-        } else {
-          console.log("Deletion canceled.");
-        }
-      });
+  deleteButtons.forEach((deleteButton) => {
+    deleteButton.addEventListener("click", () => {
+      deleteConfirm("Do you want to delete the current note?")
+        .then(deleteNote)
+        .catch((error) => {
+          if (error) {
+            console.error(error);
+          } else {
+            console.log("Deletion canceled.");
+          }
+        });
+    });
+
+
   });
 </script>
 
