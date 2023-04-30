@@ -259,7 +259,7 @@
     // send req to server for updating note
   };
 
-  const updateButton = document.getElementById("updateNoteButton");
+  // const updateButton = document.getElementById("updateNoteButton");
   /*
   updateButton.addEventListener("click", async event => {
     event.preventDefault();
@@ -278,11 +278,14 @@
     return note;
   };
   */
+  const updateButtons = document.querySelectorAll("#updateNoteButton");
 
-  updateButton.addEventListener("click", event => {
-    const noteId = event.target.dataset.id;
-    console.log(event.target);
-    console.log("Update button clicked.", noteId);
+  updateButtons.forEach((updateButton) => {
+    updateButton.addEventListener("click", event => {
+      const noteId = event.target.dataset.id;
+      console.log("Update button clicked. Note id is: ", noteId);
+
+    });
 
     /*
     updateConfirm("Do you want to update the current note?")
