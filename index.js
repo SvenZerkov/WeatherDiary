@@ -64,7 +64,7 @@ app.get('/', async (req, res) => {
 });
 
 // get all
-/* app.get("/api/notes/", async (req, res) => {
+app.get("/api/notes/", async (req, res) => {
 
     try {
         const notes = await Note.find();
@@ -75,7 +75,7 @@ app.get('/', async (req, res) => {
             msg: "Not found"
         })
     }
-}); */
+}); 
 
 // get one
 app.get("/api/notes/(:id)", async (req, res, next) => {
@@ -108,8 +108,8 @@ app.delete("/api/notes/(:id)", async (req, res) => {
     try {
 
         // test findById to check logs
-        const delNote = await Note.findById(id);
-        // const delNote = await Note.findByIdAndDelete(id);
+        //const delNote = await Note.findById(id);
+        const delNote = await Note.findByIdAndDelete(id);
         if (delNote) {
             // console.log(delNote);
             res.json({ msg: `Note-> date: ${delNote.date}, temperature: ${delNote.temperature}, comment: '${delNote.comment}' deleted succesfully` })

@@ -76,7 +76,7 @@
             <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
                 data-id="{{this._id}}" value="Update"><br><br>
               <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
-                value="Delete">
+                data-id="{{this._id}}" value="Delete">
             </td>
           </tr>
           {{/each}}
@@ -178,6 +178,9 @@
     console.log('jQuery is loaded');
   };
 
+  console.log(axios);
+
+
   const deleteConfirm = (msg) => {
     return new Promise((resolve, reject) => {
       const confirmBox = $("#confirm-delete");
@@ -199,17 +202,26 @@
   };
 
 
-  const deleteNote = () => {
+  const deleteNote = async (noteId) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/api/notes/${noteId}`);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error.response.data);
+    } 
     console.log("Note deleted.");
     // send req to server to handle the delete after ideing correct note
   };
+  
 
   const deleteButtons = document.querySelectorAll("#deleteNoteButton");
 
   deleteButtons.forEach((deleteButton) => {
     deleteButton.addEventListener("click", () => {
+      const noteId = event.target.dataset.id;
+      console.log("Delete button clicked. Note id is: ", noteId);
       deleteConfirm("Do you want to delete the current note?")
-        .then(deleteNote)
+        .then(() => deleteNote(noteId))
         .catch((error) => {
           if (error) {
             console.error(error);
