@@ -34,10 +34,18 @@
 
         </thead>
         <tbody>
+       <tbody>
           <tr>
-            <td>date</td>
-            <td>Tähän dataa open-meteosta &#8451;</td>
-          </tr>
+          <td>Temperature:</td>
+          <td>{{weatherDetails}}</td></tr>
+          <tr><td>Sunrise: </td>
+          <td>{{this.sunrise}}</td></tr>
+          <tr><td>Sunset: </td>
+          <td>{{weatherDetails.sunset}}</td></tr>
+          <tr><td>Precipitation: </td>
+          <td>{{this.precipitation}}</td></tr>
+          <tr><td>Windspeed: </td>
+          <td>{{this.windspeed}}</td></tr>
         </tbody>
       </table>
     </div>
