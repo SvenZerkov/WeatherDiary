@@ -11,27 +11,21 @@
     <p>No content</p>
   {{/if}}
   <p>
-  <form action="/api/notes/" method="post">
+  <form action="/api/notes" method="post">
     <label for="date">Choose date: </label><br>
     <input type="date" id="date" name="date">
     </p>
-   <button onclick="showChosenDay()">View</button>
+   <button type="button" onclick="showChosenDay()">View</button>
 
     <div class="row">
       <div class="col-sm-6">
         <h3>Weather history</h3>
-        <p class="datevalue"></p>
+        <th><p class="datevalue"></p></th>
         <table class="table table-bordered">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Temperature</th>
-            </tr>
-          </thead>
       <tbody>
         <tr>
           <td>Temperature:</td>
-          <td>{{weatherDetails.temperature}} &#8451;</td>
+          <td>{{weatherDetails.temperature}}</td>
         </tr>
         <tr>
           <td>Sunrise: </td>
@@ -43,11 +37,11 @@
         </tr>
         <tr>
           <td>Precipitation: </td>
-          <td>{{weatherDetails.precipitation}} &#109;&#109;</td>
+          <td>{{weatherDetails.precipitation}}</td>
         </tr>
         <tr>
           <td>Windspeed: </td>
-          <td>{{weatherDetails.windspeed}} &#109; &#8725; &#115;</td>
+          <td>{{weatherDetails.windspeed}}</td>
         </tr>
       </tbody>
       </table>
