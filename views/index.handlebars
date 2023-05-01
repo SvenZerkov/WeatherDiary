@@ -3,19 +3,20 @@
 <div class="container">
 
 
-  <h1>Weather Diary</h1>
+  {{!-- <h1>Weather Diary</h1> --}}
 
   {{#if desc}}
-    <p>{{desc}}</p>
+    <p class="text-center ">{{desc}}</p>
   {{else}}
     <p>No content</p>
   {{/if}}
   <p>
-  <form action="/api/notes" method="post">
-    <label for="date">Choose date: </label><br>
-    <input type="date" id="date" name="date">
-    </p>
-   <button type="button" onclick="showChosenDay()">View</button>
+  <div class="date-view-container">
+    <label for="date" class="label-lg">Choose date: </label>
+    <input type="date" class="input-lg" id="date" name="date">
+   <button type="button" onclick="showChosenDay()" class="btn btn-lg">View</button>
+   </div>
+   </p>
 
     <div class="row">
       <div class="col-sm-6">
