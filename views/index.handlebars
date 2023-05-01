@@ -138,15 +138,22 @@
 </div>
 
 {{!-- update modal --}}
-<div id="updateNoteModal" class="modal">
-  <div class="modal-content">
-    <h4>Update Note</h4>
-    <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <form id="updateNoteForm">
-      <input type="text" id="updateTitle" name="title" placeholder="Title" required>
-      <textarea id="updateBody" name="body" placeholder="Body" required></textarea>
-      <button type="submit">Update</button>
-    </form>
+<div id="update-note-modal" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Update Note</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+      </div>
+      <form id="updateNoteForm">
+        <input type="number" id="updateTemperature" name="temperature" placeholder="Temperature">
+        <textarea id="updateComment" name="comment" placeholder="Comment"></textarea>
+
+      </form>
+      <div class="modal-footer">
+        <button type="submit">Update</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -156,7 +163,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Confirm update</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
       </div>
       <div class="modal-body">
         <p class="message"></p>
@@ -241,6 +248,7 @@
 
 {{!-- script for event listener on update button --}}
 <script>
+  // func to confirm delete
   const updateConfirm = (msg) => {
     return new Promise((resolve, reject) => {
       const confirmBox = $("#confirm-update");
@@ -256,34 +264,28 @@
       confirmBox.show();
     });
   };
+
+  // func to handle update modal
+  /*const updateModal = () => {
+    return new Promise(())
+  };*/
+
+  // func to update note
   const updateNote = () => {
     console.log("note updated");
     // send req to server for updating note
   };
-  // const updateButton = document.getElementById("updateNoteButton");
-  /*
-  updateButton.addEventListener("click", async event => {
-    event.preventDefault();
- 
-    const noteID = updateButton.dataset.id;
-    const note = await getNoteById(noteID);
- 
-    const updateNoteForm = document.querySelector("#updateNoteForm");
-    updateNoteForm.title.value = note.title;
-    updateNoteForm.body.value = note.body;
-  });
- 
-  const getNoteById = async (id) => {
-    const response = await fetch(`/api/notes/${id}`);
-    const note = await response.json();
-    return note;
-  };
-  */
+
+  // update event listener
   const updateButtons = document.querySelectorAll("#updateNoteButton");
   updateButtons.forEach((updateButton) => {
-    updateButton.addEventListener("click", event => {
+    updateButton.addEventListener("click", async (event) => {
       const noteId = event.target.dataset.id;
+      const response = await fetch(`/api/notes/${noteId}`);
+      const noteData = await response.json();
+
       console.log("Update button clicked. Note id is: ", noteId);
+      $('#update-note-modal').modal('show');
     });
     /*
     updateConfirm("Do you want to update the current note?")

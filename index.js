@@ -16,7 +16,7 @@ app.engine('handlebars', exphbs.engine({
 }));
 app.use(express.static('public'));
 app.use("", require("./routes/notes.js"));
-
+app.use(express.json());
 app.set('view engine', 'handlebars');
 
 //Tietokantaan yhdistäminen
@@ -41,26 +41,26 @@ app.get('/', async (req, res) => {
     const UserNotes = await Note.find();
 
     fetch('https://archive-api.open-meteo.com/v1/archive?latitude=60.17&longitude=24.94&start_date=2011-01-01&end_date=2011-01-01&daily=temperature_2m_mean,sunrise,sunset,precipitation_sum,windspeed_10m_max&timezone=Europe%2FMoscow&windspeed_unit=ms')
-    .then ((response) => response.json())
-    .then ((data) => {
+        .then((response) => response.json())
+        .then((data) => {
 
-        const weatherInfo = {
+            const weatherInfo = {
 
-            temperature : data.daily.temperature_2m_mean.toString(),
-            sunrise : data.daily.sunrise.toString(),
-            sunset : data.daily.sunset.toString(),
-            precipitation : data.daily.precipitation_sum.toString(),
-            windspeed : data.daily.windspeed_10m_max.toString(),
+                temperature: data.daily.temperature_2m_mean.toString(),
+                sunrise: data.daily.sunrise.toString(),
+                sunset: data.daily.sunset.toString(),
+                precipitation: data.daily.precipitation_sum.toString(),
+                windspeed: data.daily.windspeed_10m_max.toString(),
             };
-    
-        res.render('index',
-        {
-            pagetitle: "WeatherDiary",
-            desc: "At this website, you can view historical weather data for Helsinki and add your own personal notes regarding specific dates. Please note that the weather data from today and the past couple of days may be missing due to delays. We retrieve our weather information from the Open Meteo API. At the bottom of this page, you can enter your own comments. To begin, please select a date between January 1, 2000, and today. Once you have chosen your preferred date, click on the 'View' button.",
-            UserNotes: UserNotes.map(usernote => usernote.toJSON()),
-            weatherDetails: weatherInfo,
-        });
-    })
+
+            res.render('index',
+                {
+                    pagetitle: "WeatherDiary",
+                    desc: "At this website, you can view historical weather data for Helsinki and add your own personal notes regarding specific dates. Please note that the weather data from today and the past couple of days may be missing due to delays. We retrieve our weather information from the Open Meteo API. At the bottom of this page, you can enter your own comments. To begin, please select a date between January 1, 2000, and today. Once you have chosen your preferred date, click on the 'View' button.",
+                    UserNotes: UserNotes.map(usernote => usernote.toJSON()),
+                    weatherDetails: weatherInfo,
+                });
+        })
 });
 
 // get all
@@ -73,7 +73,7 @@ app.get("/api/notes/", async (req, res) => {
             msg: "Not found"
         })
     }
-}); 
+});
 
 // get one
 app.get("/api/notes/(:id)", async (req, res, next) => {
@@ -137,6 +137,39 @@ app.post("/api/notes/", async (req, res) => {
 
 });
 
+// PATCH Santeri 
+app.patch("/api/notes/:id", async (req, res) => {
+    console.log(req.body.date);
+    const id = req.params.id;
+    console.log(id);
+
+    if (!req.body) {
+        res.status(400).json(
+            {
+                msg: "Body is empty"
+            }
+        )
+    } else {
+        const noteToUpdate = {
+            temperature: req.body.temperature,
+            comment: req.body.comment
+        };
+
+        const updatedNote = await Note.findByIdAndUpdate(id, noteToUpdate, { new: true });
+
+        if (updatedNote) {
+            res.json(
+                {
+                    msg: "note updated",
+                    updatedNote
+                }
+            );
+        } else {
+            return res.status(400).json({ msg: "no note on that id" });
+        }
+    }
+
+});
 
 // Error TOMI
 
@@ -144,18 +177,7 @@ app.use(function (req, res, next) {
     res.status(404).render('404', { pagetitle: '404 Error' });
 });
 
-// PATCH Santeri 
-app.patch('/api/notes/:id', async(req, res, next) => {
-    try {
-      const note = await Note.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      if (!note) {
-        return res.status(404).send();
-      }
-      res.send(note);
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  });
-  
+
+
 
 
