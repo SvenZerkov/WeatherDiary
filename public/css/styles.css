@@ -82,6 +82,7 @@ header {
   justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 
@@ -100,6 +101,7 @@ header {
 #scrollbar-thead {
   width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
 }
-#scrollbar-table {
+.scrollbar-table {
   width: 400px;
+  align-items: center;
 }
