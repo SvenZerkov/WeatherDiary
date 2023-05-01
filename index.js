@@ -4,6 +4,7 @@ const exphbs = require('express-handlebars');
 require('dotenv').config();
 const path = require("path");
 const Note = require("./models/Note");
+const { post } = require('./routes/notes.js');
 const app = express();
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -33,34 +34,33 @@ const dbURI = 'mongodb+srv://Team12:WeatherDiary2023@weatherdiary.fssyihy.mongod
     }
 })();
 
-function fetchApi(url) {
-    fetch(url)
-    .then ((response) => response.json())
-    .then ((data) => {
-    const weatherDetails = {
-        temperature : data.daily.temperature_2m_mean.toString(),
-        sunrise : data.daily.sunrise.toString(),
-        sunset : data.daily.sunset.toString(),
-        precipitation : data.daily.precipitation_sum.toString(),
-        windspeed : data.daily.windspeed_10m_max.toString()
-    };
+//Open API haku ja etusivu
 
-    console.log(weatherDetails);
-
-    return weatherDetails;
-    })
-};
 
 app.get('/', async (req, res) => {
     const UserNotes = await Note.find();
 
-    res.render('index',
+    fetch('https://archive-api.open-meteo.com/v1/archive?latitude=60.17&longitude=24.94&start_date=2011-01-01&end_date=2011-01-01&daily=temperature_2m_mean,sunrise,sunset,precipitation_sum,windspeed_10m_max&timezone=Europe%2FMoscow&windspeed_unit=ms')
+    .then ((response) => response.json())
+    .then ((data) => {
+
+        const weatherInfo = {
+
+            temperature : data.daily.temperature_2m_mean.toString(),
+            sunrise : data.daily.sunrise.toString(),
+            sunset : data.daily.sunset.toString(),
+            precipitation : data.daily.precipitation_sum.toString(),
+            windspeed : data.daily.windspeed_10m_max.toString(),
+            };
+    
+        res.render('index',
         {
             pagetitle: "WeatherDiary",
             desc: "At this website, you can view historical weather data for Helsinki and add your own personal notes regarding specific dates. Please note that the weather data from today and the past couple of days may be missing due to delays. We retrieve our weather information from the Open Meteo API. At the bottom of this page, you can enter your own comments. To begin, please select a date between January 1, 2000, and today. Once you have chosen your preferred date, click on the 'View' button.",
             UserNotes: UserNotes.map(usernote => usernote.toJSON()),
-            weatherDetails: fetchApi('https://archive-api.open-meteo.com/v1/archive?latitude=60.17&longitude=24.94&start_date=2011-01-01&end_date=2011-01-01&daily=temperature_2m_mean,sunrise,sunset,precipitation_sum,windspeed_10m_max&timezone=Europe%2FMoscow&windspeed_unit=ms'),
+            weatherDetails: weatherInfo,
         });
+    })
 });
 
 // get all
@@ -145,6 +145,7 @@ app.post("/api/notes/", async (req, res) => {
 app.use(function (req, res, next) {
     res.status(404).render('404', { pagetitle: '404 Error' });
 });
+<<<<<<< Updated upstream
 
 // PATCH Santeri 
 app.patch('/api/notes/:id', async(req, res, next) => {
@@ -161,3 +162,5 @@ app.patch('/api/notes/:id', async(req, res, next) => {
   
 
 
+=======
+>>>>>>> Stashed changes
