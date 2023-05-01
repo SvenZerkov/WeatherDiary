@@ -145,22 +145,3 @@ app.post("/api/notes/", async (req, res) => {
 app.use(function (req, res, next) {
     res.status(404).render('404', { pagetitle: '404 Error' });
 });
-<<<<<<< Updated upstream
-
-// PATCH Santeri 
-app.patch('/api/notes/:id', async(req, res, next) => {
-    try {
-      const note = await Note.findByIdAndUpdate(req.params.id, req.body, { new: true });
-      if (!note) {
-        return res.status(404).send();
-      }
-      res.send(note);
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  });
-  
-
-
-=======
->>>>>>> Stashed changes

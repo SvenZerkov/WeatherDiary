@@ -6,24 +6,16 @@
   <h1>Weather Diary</h1>
 
   {{#if desc}}
-<<<<<<< Updated upstream
-  <p>{{desc}}</p>
-  <button onclick="showChosenDay()">View</button>
-=======
     <p>{{desc}}</p>
   {{else}}
     <p>No content</p>
   {{/if}}
->>>>>>> Stashed changes
   <p>
   <form action="/api/notes/" method="post">
     <label for="date">Choose date: </label><br>
     <input type="date" id="date" name="date">
     </p>
-<<<<<<< Updated upstream
-    {{else}}
-    <p>No content</p>
-    {{/if}}
+   <button onclick="showChosenDay()">View</button>
 
     <div class="row">
       <div class="col-sm-6">
@@ -35,26 +27,15 @@
               <th>Date</th>
               <th>Temperature</th>
             </tr>
-
           </thead>
-          <tbody>
-            <tr>
-              <td>date</td>
-              <td>Tähän dataa open-meteosta &#8451;</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      </thead>
-      <tbody>
       <tbody>
         <tr>
           <td>Temperature:</td>
-          <td>{{weatherDetails}}</td>
+          <td>{{weatherDetails.temperature}} &#8451;</td>
         </tr>
         <tr>
           <td>Sunrise: </td>
-          <td>{{this.sunrise}}</td>
+          <td>{{weatherDetails.sunrise}}</td>
         </tr>
         <tr>
           <td>Sunset: </td>
@@ -62,40 +43,13 @@
         </tr>
         <tr>
           <td>Precipitation: </td>
-          <td>{{this.precipitation}}</td>
+          <td>{{weatherDetails.precipitation}} &#109;&#109;</td>
         </tr>
         <tr>
           <td>Windspeed: </td>
-          <td>{{this.windspeed}}</td>
+          <td>{{weatherDetails.windspeed}} &#109; &#8725; &#115;</td>
         </tr>
       </tbody>
-=======
-     <button onclick="showChosenDay()">View</button>
-
-  <div class="row">
-    <div class="col-sm-6">
-      <h3>Weather history</h3> <p class="datevalue"></p>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temperature</th>
-          </tr>
-        </thead>
-       <tbody>
-          <tr>
-          <td>Temperature:</td>
-          <td>{{weatherDetails.temperature}} &#8451;</td></tr>
-          <tr><td>Sunrise: </td>
-          <td>{{weatherDetails.sunrise}}</td></tr>
-          <tr><td>Sunset: </td>
-          <td>{{weatherDetails.sunset}}</td></tr>
-          <tr><td>Precipitation: </td>
-          <td>{{weatherDetails.precipitation}} &#109;&#109;</td></tr>
-          <tr><td>Windspeed: </td>
-          <td>{{weatherDetails.windspeed}} &#109; &#8725; &#115;</td></tr>
-        </tbody>
->>>>>>> Stashed changes
       </table>
     </div>
 
