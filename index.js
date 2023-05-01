@@ -64,18 +64,16 @@ app.get('/', async (req, res) => {
 });
 
 // get all
-app.get("/api/notes/", async (req, res) => {
-
+/* app.get("/api/notes/", async (req, res) => {
     try {
         const notes = await Note.find();
-
         res.json(notes);
     } catch (error) {
         res.status(404).json({
             msg: "Not found"
         })
     }
-}); 
+}); */
 
 // get one
 app.get("/api/notes/(:id)", async (req, res, next) => {
@@ -108,8 +106,8 @@ app.delete("/api/notes/(:id)", async (req, res) => {
     try {
 
         // test findById to check logs
-        //const delNote = await Note.findById(id);
-        const delNote = await Note.findByIdAndDelete(id);
+        const delNote = await Note.findById(id);
+        // const delNote = await Note.findByIdAndDelete(id);
         if (delNote) {
             // console.log(delNote);
             res.json({ msg: `Note-> date: ${delNote.date}, temperature: ${delNote.temperature}, comment: '${delNote.comment}' deleted succesfully` })
@@ -145,3 +143,19 @@ app.post("/api/notes/", async (req, res) => {
 app.use(function (req, res, next) {
     res.status(404).render('404', { pagetitle: '404 Error' });
 });
+
+// PATCH Santeri 
+app.patch('/api/notes/:id', async(req, res, next) => {
+    try {
+      const note = await Note.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      if (!note) {
+        return res.status(404).send();
+      }
+      res.send(note);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  });
+  
+
+

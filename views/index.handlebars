@@ -76,7 +76,7 @@
             <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
                 data-id="{{this._id}}" value="Update"><br><br>
               <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
-                data-id="{{this._id}}" value="Delete">
+                value="Delete">
             </td>
           </tr>
           {{/each}}
@@ -177,7 +177,6 @@
   } else {
     console.log('jQuery is loaded');
   };
-
   const deleteConfirm = (msg) => {
     return new Promise((resolve, reject) => {
       const confirmBox = $("#confirm-delete");
@@ -197,27 +196,15 @@
       confirmBox.show();
     });
   };
-
-
-  const deleteNote = async (noteId) => {
-    try {
-      const response = await axios.delete(`http://localhost:3000/api/notes/${noteId}`);
-      console.log(response.data);
-      console.log("Note deleted.");
-    } catch (error) {
-      console.error(error.response.data);
-    } 
+  const deleteNote = () => {
+    console.log("Note deleted.");
+    // send req to server to handle the delete after ideing correct note
   };
-  
-
   const deleteButtons = document.querySelectorAll("#deleteNoteButton");
-
   deleteButtons.forEach((deleteButton) => {
     deleteButton.addEventListener("click", () => {
-      const noteId = event.target.dataset.id;
-      console.log("Delete button clicked. Note id is: ", noteId);
       deleteConfirm("Do you want to delete the current note?")
-        .then(() => deleteNote(noteId))
+        .then(deleteNote)
         .catch((error) => {
           if (error) {
             console.error(error);
@@ -226,15 +213,11 @@
           }
         });
     });
-
-
   });
 </script>
 
 {{!-- script for event listener on update button --}}
 <script>
-
-
   const updateConfirm = (msg) => {
     return new Promise((resolve, reject) => {
       const confirmBox = $("#confirm-update");
@@ -250,12 +233,10 @@
       confirmBox.show();
     });
   };
-
   const updateNote = () => {
     console.log("note updated");
     // send req to server for updating note
   };
-
   // const updateButton = document.getElementById("updateNoteButton");
   /*
   updateButton.addEventListener("click", async event => {
@@ -276,14 +257,11 @@
   };
   */
   const updateButtons = document.querySelectorAll("#updateNoteButton");
-
   updateButtons.forEach((updateButton) => {
     updateButton.addEventListener("click", event => {
       const noteId = event.target.dataset.id;
       console.log("Update button clicked. Note id is: ", noteId);
-
     });
-
     /*
     updateConfirm("Do you want to update the current note?")
       .then(updateNote)
@@ -293,11 +271,9 @@
         } else {
           console.log("Update canceled.")
         }
-
       });
     */
   });
-
 </script>
 
 {{!-- Script for showing chosen day in html --}}
@@ -305,26 +281,20 @@
   function showChosenDay() {
     let MyDate = document.getElementById("date").value;
     //console.log(MyDate);
-
     // slicing the date, to show in right format
     let year = String(MyDate).slice(0, 4);
     //console.log(year);
-
     let month = String(MyDate).slice(5, 7);
     //console.log(month);
-
     let day = String(MyDate).slice(8, 10);
     //console.log(day);
-
     let formatDate = day + "." + month + "." + year;
     //console.log(formatDate);
-
     const collection = document.getElementsByClassName("datevalue");
     collection[0].innerHTML = formatDate;
     collection[1].innerHTML = formatDate;
     collection[2].innerHTML = formatDate;
   }
-
 </script>
 
 
@@ -333,7 +303,6 @@
   const form = document.querySelector('form');
   const temperatureInput = document.getElementById('temperature');
   const temperatureFalse = document.getElementById('temperature-false');
-
   form.addEventListener('submit', (event) => {
     if (!temperatureInput.checkValidity()) {
       temperatureFalse.style.display = 'block';
