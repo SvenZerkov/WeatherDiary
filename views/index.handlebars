@@ -11,11 +11,14 @@
     <p>No content</p>
   {{/if}}
   <p>
+  <div class="date-view-container">
   <form action="/api/notes/" method="post">
-    <label for="date">Choose date: </label><br>
-    <input type="date" id="date" name="date">
-    </p>
-   <button onclick="showChosenDay()">View</button>
+    <label for="date" class="label-lg">Choose date: </label>
+    <input type="date" class="input-lg" id="date" name="date">
+    
+   <button onclick="showChosenDay()" class="btn btn-lg">View</button>
+   </div>
+   </p>
 
     <div class="row">
       <div class="col-sm-6">
