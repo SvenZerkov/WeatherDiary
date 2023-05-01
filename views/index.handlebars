@@ -271,14 +271,33 @@
   };
 
   // func to update note
-  const updateNote = (confirmed) => {
+  const updateNote = async (confirmed, noteId, noteData) => {
+    console.log("Note data passed to updateNote: ", noteData);
+    console.log(`Note id received in updateNote function: ${noteId}`);
     if (confirmed) {
-      console.log("note updated");
+      try {
+        const response = await fetch(`http://localhost:3000/api/notes/${noteId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(noteData)
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(`Note updated, ${data}`);
+        } else {
+          console.error(`HTTP error: ${response.status}`);
+        }
+
+      } catch (error) {
+        console.error(error);
+      }
+
     } else {
       console.log("update canceled");
     }
-
-    // send req to server for updating note
   };
 
   // update event listener
@@ -289,7 +308,7 @@
       console.log("Update button clicked. Note id is: ", noteId);
       const response = await fetch(`/api/notes/${noteId}`);
       const noteData = await response.json();
-      console.log("note data: ", noteData);
+      console.log("note data at this point: ", noteData);
 
       const updateTemperatureInput = document.getElementById('updateTemperature');
       const updateCommentInput = document.getElementById('updateComment');
@@ -297,8 +316,10 @@
       updateTemperatureInput.value = noteData.temperature;
       updateCommentInput.value = noteData.comment;
 
-      $('#update-note-modal').modal('show');
+      const updateNoteForm = document.getElementById("updateNoteForm");
+      updateNoteForm.dataset.id = noteId;
 
+      $('#update-note-modal').modal('show');
 
     });
 
@@ -306,14 +327,24 @@
   const updateNoteForm = document.getElementById("updateNoteForm");
   updateNoteForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    updateConfirm("DO you really")
+    const noteId = event.target.dataset.id;
+    console.log("Note id inside noteForm is: ", noteId);
+    const updateTemperatureInput = document.getElementById('updateTemperature');
+    const updateCommentInput = document.getElementById('updateComment');
+
+    const noteData = {
+      temperature: updateTemperatureInput.value,
+      comment: updateCommentInput.value
+    };
+
+    updateConfirm("Do you really want to update this note?")
       .then(() => {
         const updateConfModal = document.querySelector("#confirm-update");
         if (updateConfModal) {
           updateConfModal.addEventListener("shown.bs.modal", () => {
             updateConfModal.querySelector(".btn-primary").focus();
           });
-          updateNote(true);
+          updateNote(true, noteId, noteData);
         }
 
       })
