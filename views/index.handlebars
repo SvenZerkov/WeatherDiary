@@ -119,8 +119,8 @@
 </div>
 
 {{!-- delete modal --}}
-<div id="confirm-delete" class="modal">
-  <div class="modal-dialog">
+<div id="confirm-delete" class="modal" role="dialog" aria-labelledby="confirm-deleteLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Confirm delete</h4>
@@ -138,8 +138,8 @@
 </div>
 
 {{!-- update modal --}}
-<div id="update-note-modal" class="modal">
-  <div class="modal-dialog">
+<div id="update-note-modal" class="modal" role="dialog" aria-labelledby="update-note-modalLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Update Note</h4>
@@ -156,8 +156,8 @@
 </div>
 
 {{!-- update confirm modal --}}
-<div id="confirm-update" class="modal">
-  <div class="modal-dialog">
+<div id="confirm-update" class="modal" role="dialog" aria-labelledby="confirm-updateLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Confirm update</h4>
@@ -301,6 +301,7 @@
   };
 
   // update event listener
+
   const updateButtons = document.querySelectorAll("#updateNoteButton");
   updateButtons.forEach((updateButton) => {
     updateButton.addEventListener("click", async (event) => {
@@ -319,7 +320,10 @@
       const updateNoteForm = document.getElementById("updateNoteForm");
       updateNoteForm.dataset.id = noteId;
 
-      $('#update-note-modal').modal('show');
+      $('#update-note-modal').modal('show').on('shown.bs.modal', function () {
+        $('#updateTemperature').focus();
+      });
+
 
     });
 
