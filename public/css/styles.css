@@ -7,6 +7,13 @@ footer {
   margin-top: 20px;
 }
 
+.row hr {
+  border: none;
+  border-top: 2px solid black;
+  margin-top: 40px;
+  margin-bottom: 50px;
+}
+
 .personaldiaryentry {
   margin-top: 20rem;
 }
