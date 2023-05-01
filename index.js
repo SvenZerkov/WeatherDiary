@@ -46,11 +46,11 @@ app.get('/', async (req, res) => {
 
         const weatherInfo = {
 
-            temperature : data.daily.temperature_2m_mean.toString(),
+            temperature : data.daily.temperature_2m_mean.toString() + " °C",
             sunrise : data.daily.sunrise.toString(),
             sunset : data.daily.sunset.toString(),
-            precipitation : data.daily.precipitation_sum.toString(),
-            windspeed : data.daily.windspeed_10m_max.toString(),
+            precipitation : data.daily.precipitation_sum.toString() + " mm",
+            windspeed : data.daily.windspeed_10m_max.toString() + " m/s",
             };
     
         res.render('index',
