@@ -6,16 +6,16 @@
   <h1>Weather Diary</h1>
 
   {{#if desc}}
-    <p>{{desc}}</p>
+  <p>{{desc}}</p>
   {{else}}
-    <p>No content</p>
+  <p>No content</p>
   {{/if}}
   <p>
   <form action="/api/notes/" method="post">
     <label for="date">Choose date: </label><br>
     <input type="date" id="date" name="date">
     </p>
-   <button onclick="showChosenDay()">View</button>
+    <button onclick="showChosenDay()">View</button>
 
     <div class="row">
       <div class="col-sm-6">
@@ -28,93 +28,93 @@
               <th>Temperature</th>
             </tr>
           </thead>
-      <tbody>
-        <tr>
-          <td>Temperature:</td>
-          <td>{{weatherDetails.temperature}} &#8451;</td>
-        </tr>
-        <tr>
-          <td>Sunrise: </td>
-          <td>{{weatherDetails.sunrise}}</td>
-        </tr>
-        <tr>
-          <td>Sunset: </td>
-          <td>{{weatherDetails.sunset}}</td>
-        </tr>
-        <tr>
-          <td>Precipitation: </td>
-          <td>{{weatherDetails.precipitation}} &#109;&#109;</td>
-        </tr>
-        <tr>
-          <td>Windspeed: </td>
-          <td>{{weatherDetails.windspeed}} &#109; &#8725; &#115;</td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+          <tbody>
+            <tr>
+              <td>Temperature:</td>
+              <td>{{weatherDetails.temperature}} &#8451;</td>
+            </tr>
+            <tr>
+              <td>Sunrise: </td>
+              <td>{{weatherDetails.sunrise}}</td>
+            </tr>
+            <tr>
+              <td>Sunset: </td>
+              <td>{{weatherDetails.sunset}}</td>
+            </tr>
+            <tr>
+              <td>Precipitation: </td>
+              <td>{{weatherDetails.precipitation}} &#109;&#109;</td>
+            </tr>
+            <tr>
+              <td>Windspeed: </td>
+              <td>{{weatherDetails.windspeed}} &#109; &#8725; &#115;</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-    <div class="col-sm-6">
-      <h3>Personal entries</h3>
-      <p class="datevalue"></p>
-      <table id="scrollbar-table" class="table table-bordered">
-        <thead id="scrollbar-thead">
+      <div class="col-sm-6">
+        <h3>Personal entries</h3>
+        <p class="datevalue"></p>
+        <table id="scrollbar-table" class="table table-bordered">
+          <thead id="scrollbar-thead">
+            <tr>
+              <th>Date</th>
+              <th>Temperature</th>
+              <th>Comments</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="scrollbar-tbody">
+            {{#each UserNotes}}
+            <tr>
+              <div class="note">
+                <td>{{this.date}}</td>
+                <td>{{this.temperature}} &#8451;</td>
+                <td>{{this.comment}}</td>
+              </div>
+              <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
+                  data-id="{{this._id}}" value="Update"><br><br>
+                <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
+                  data-id="{{this._id}}" value="Delete">
+              </td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-12 personaldiaryentry">
+      <h3>Personal diary entries</h3>
+
+      <table class="table table-bordered">
+        <thead>
           <tr>
             <th>Date</th>
-            <th>Temperature</th>
-            <th>Comments</th>
-            <th></th>
+            <th><label for="temperature">Temperature</label></th>
+            <th><label for="comment">Comments</label></th>
           </tr>
         </thead>
-        <tbody id="scrollbar-tbody">
-          {{#each UserNotes}}
+        <tbody>
           <tr>
-            <div class="note">
-              <td>{{this.date}}</td>
-              <td>{{this.temperature}} &#8451;</td>
-              <td>{{this.comment}}</td>
-            </div>
-            <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
-                data-id="{{this._id}}" value="Update"><br><br>
-              <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
-                data-id="{{this._id}}" value="Delete">
+            {{!-- <td><input type="date" id="date" name="date"></td> --}}
+            <td>
+              <p class="datevalue"></p>
+            </td>
+            <td>
+              <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
+            </td>
+            {{!-- <span id="temperature-between" class="invalid-temperature">between -80 and 50.</span> --}}
+            <td>
+              <input type="text" id="comment" name="comment" value="" maxlength="200">
+              <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
+                200.</span>
             </td>
           </tr>
-          {{/each}}
         </tbody>
       </table>
-    </div>
-</div>
-<div class="col-sm-4"></div>
-<div class="col-sm-12 personaldiaryentry">
-  <h3>Personal diary entries</h3>
-
-  <table class="table table-bordered">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th><label for="temperature">Temperature</label></th>
-        <th><label for="comment">Comments</label></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        {{!-- <td><input type="date" id="date" name="date"></td> --}}
-        <td>
-          <p class="datevalue"></p>
-        </td>
-        <td>
-          <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
-        </td>
-        {{!-- <span id="temperature-between" class="invalid-temperature">between -80 and 50.</span> --}}
-        <td>
-          <input type="text" id="comment" name="comment" value="" maxlength="200">
-          <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
-            200.</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <input type="submit" value="Submit">
+      <input type="submit" value="Submit">
   </form>
 </div>
 
@@ -124,7 +124,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Confirm delete</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
       </div>
       <div class="modal-body">
         <p class="message"></p>
@@ -177,6 +177,8 @@
   } else {
     console.log('jQuery is loaded');
   };
+
+  // function for confirming the delete
   const deleteConfirm = (msg) => {
     return new Promise((resolve, reject) => {
       const confirmBox = $("#confirm-delete");
@@ -194,26 +196,38 @@
         reject();
       });
       confirmBox.show();
+      confirmBox.find(".yes-delete").attr("tabindex", "0").focus();
     });
   };
-   const deleteNote = async (noteId) => {
+
+  // function for deleting the note
+  const deleteNote = async (noteId) => {
     try {
       const response = await axios.delete(`http://localhost:3000/api/notes/${noteId}`);
       console.log(response.data);
     } catch (error) {
       console.error(error.response.data);
-    } 
-    
-    
-  };
+    }
 
+
+  };
+  // del eventlistener
   const deleteButtons = document.querySelectorAll("#deleteNoteButton");
   deleteButtons.forEach((deleteButton) => {
-    deleteButton.addEventListener("click", () => {
+    deleteButton.addEventListener("click", (event) => {
       const noteId = event.target.dataset.id;
       console.log("Delete button clicked. Note id is: ", noteId);
       deleteConfirm("Do you want to delete the current note?")
-        .then(() => deleteNote(noteId))
+        .then(() => {
+          const deleteModal = document.querySelector("#deleteConfirmModal");
+          if (deleteModal) {
+            deleteModal.addEventListener("shown.bs.modal", () => {
+              deleteModal.querySelector(".btn-primary").focus();
+            });
+
+          }
+          deleteNote(noteId);
+        })
         .catch((error) => {
           if (error) {
             console.error(error);
