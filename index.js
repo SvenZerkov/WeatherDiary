@@ -78,6 +78,7 @@ app.post('/', async (req, res) => {
             desc: "At this website, you can view historical weather data for Helsinki and add your own personal notes regarding specific dates. Please note that the weather data from today and the past couple of days may be missing due to delays. We retrieve our weather information from the Open Meteo API. At the bottom of this page, you can enter your own comments. To begin, please select a date between January 1, 2000, and today. Once you have chosen your preferred date, click on the 'View' button.",
             UserNotes: UserNotes.map(usernote => usernote.toJSON()),
             weatherDetails: weatherInfo,
+            Date: showChosenDay(dateInput),
         });
     })
 });
@@ -176,6 +177,21 @@ app.patch('/api/notes/:id', async(req, res, next) => {
       res.status(400).send(error);
     }
   });
+
+  function showChosenDay(date) {
+    let MyDate = date;
+    //console.log(MyDate);
+    // slicing the date, to show in right format
+    let year = String(MyDate).slice(0, 4);
+    //console.log(year);
+    let month = String(MyDate).slice(5, 7);
+    //console.log(month);
+    let day = String(MyDate).slice(8, 10);
+    //console.log(day);
+    let formatDate = day + "." + month + "." + year;
+    //console.log(formatDate);
+    return formatDate;
+  }
   
 
 

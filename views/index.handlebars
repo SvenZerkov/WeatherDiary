@@ -24,7 +24,7 @@
       <hr>
       <div class="col-sm-12">
         <h3 class="text-center">Weather history</h3>
-        <th><p class="datevalue"></p></th>
+        <th><p>{{Date}}</p></th>
         <table class="table table-bordered">
       <tbody>
         <tr>
@@ -52,7 +52,7 @@
     </div>
     <div class="col-sm-12">
       <h3 class="text-center">Personal entries</h3>
-      <p class="datevalue"></p>
+      <p>{{Date}}</p>
       <table id="scrollbar-table" class="table table-bordered">
         <thead id="scrollbar-thead">
           <tr>
@@ -97,7 +97,7 @@
       <tr>
         {{!-- <td><input type="date" id="date" name="date"></td> --}}
         <td>
-          <p class="datevalue"></p>
+          <p>{{Date}}</p>
         </td>
         <td>
           <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
@@ -270,27 +270,6 @@
       });
     */
   });
-</script>
-
-{{!-- Script for showing chosen day in html --}}
-<script>
-  function showChosenDay() {
-    let MyDate = document.getElementById("date").value;
-    //console.log(MyDate);
-    // slicing the date, to show in right format
-    let year = String(MyDate).slice(0, 4);
-    //console.log(year);
-    let month = String(MyDate).slice(5, 7);
-    //console.log(month);
-    let day = String(MyDate).slice(8, 10);
-    //console.log(day);
-    let formatDate = day + "." + month + "." + year;
-    //console.log(formatDate);
-    const collection = document.getElementsByClassName("datevalue");
-    collection[0].innerHTML = formatDate;
-    collection[1].innerHTML = formatDate;
-    collection[2].innerHTML = formatDate;
-  }
 </script>
 
 
