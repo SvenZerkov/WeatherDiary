@@ -126,11 +126,11 @@ app.delete("/api/notes/(:id)", async (req, res) => {
     try {
 
         // test findById to check logs
-        const delNote = await Note.findById(id);
-        // const delNote = await Note.findByIdAndDelete(id);
+        // const delNote = await Note.findById(id);
+        const delNote = await Note.findByIdAndDelete(id);
         if (delNote) {
             // console.log(delNote);
-            res.json({ msg: `Note-> date: ${delNote.date}, temperature: ${delNote.temperature}, comment: '${delNote.comment}' deleted succesfully` })
+            res.json({ msg: `Note-> ID: ${id} date: ${delNote.date}, temperature: ${delNote.temperature}, comment: '${delNote.comment}' deleted succesfully` })
         } else {
             res.status(404).json({ msg: `Note on id ${id} not found` })
         }
