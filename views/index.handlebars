@@ -68,7 +68,6 @@
               <td>{{this.date}}</td>
               <td>{{this.temperature}} &#8451;</td>
               <td>{{this.comment}}</td>
-          {{/each}}
             </div>
             <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
                 data-id="{{this._id}}" value="Update"><br><br>
@@ -76,6 +75,7 @@
                 value="Delete">
             </td>
           </tr>
+          {{/each}}
         </tbody>
       </table>
     </div>

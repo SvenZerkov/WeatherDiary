@@ -38,14 +38,12 @@ const dbURI = 'mongodb+srv://Team12:WeatherDiary2023@weatherdiary.fssyihy.mongod
 
 
 app.get('/', async (req, res) => {
-    const UserNotes = await Note.find();
     const weatherInfo = {};
     
         res.render('index',
         {
             pagetitle: "WeatherDiary",
             desc: "At this website, you can view historical weather data for Helsinki and add your own personal notes regarding specific dates. Please note that the weather data from today and the past couple of days may be missing due to delays. We retrieve our weather information from the Open Meteo API. At the bottom of this page, you can enter your own comments. To begin, please select a date between January 1, 2000, and today. Once you have chosen your preferred date, click on the 'View' button.",
-            UserNotes: UserNotes.map(usernote => usernote.toJSON()),
             weatherDetails: weatherInfo,
         });
     //})
@@ -56,8 +54,9 @@ app.get('/', async (req, res) => {
 app.post('/', async (req, res) => {
 
     console.log(req.body.date);
-    const UserNotes = await Note.find();
+    const UserNotes = await Note.find({ date: req.body.date});
     const dateInput = await req.body.date;
+
 
     fetch('https://archive-api.open-meteo.com/v1/archive?latitude=60.17&longitude=24.94&start_date=' + dateInput + '&end_date=' + dateInput + '&daily=temperature_2m_mean,sunrise,sunset,precipitation_sum,windspeed_10m_max&timezone=Europe%2FMoscow&windspeed_unit=ms')
     .then ((response) => response.json())
