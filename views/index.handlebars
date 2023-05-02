@@ -242,62 +242,112 @@
 
 {{!-- script for event listener on update button --}}
 <script>
+  // func to confirm update
   const updateConfirm = (msg) => {
     return new Promise((resolve, reject) => {
       const confirmBox = $("#confirm-update");
       confirmBox.find(".message").text(msg);
       confirmBox.find(".yes-update").click(() => {
         confirmBox.hide();
+        $('#update-note-modal').modal('hide');
         resolve();
       });
       confirmBox.find(".no-update").click(() => {
         confirmBox.hide();
+        $('#update-note-modal').modal('hide');
+        reject();
+      });
+      confirmBox.find(".close").click(() => {
+        confirmBox.hide();
+        $('#update-note-modal').modal('hide');
         reject();
       });
       confirmBox.show();
+      confirmBox.find(".yes-update").attr("tabindex", "0").focus();
     });
   };
-  const updateNote = () => {
-    console.log("note updated");
-    // send req to server for updating note
+
+  // func to update note
+  const updateNote = async (confirmed, noteId, noteData) => {
+    console.log("Note data passed to updateNote: ", noteData);
+    console.log(`Note id received in updateNote function: ${noteId}`);
+    if (confirmed) {
+      try {
+        const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, noteData);
+
+        if (response.status === 200) {
+          console.log(`Note updated, ${JSON.stringify(response.data)}`);
+        } else {
+          console.error(`HTTP error: ${response.status}`);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
+    } else {
+      console.log("update canceled");
+    }
   };
-  // const updateButton = document.getElementById("updateNoteButton");
-  /*
-  updateButton.addEventListener("click", async event => {
-    event.preventDefault();
- 
-    const noteID = updateButton.dataset.id;
-    const note = await getNoteById(noteID);
- 
-    const updateNoteForm = document.querySelector("#updateNoteForm");
-    updateNoteForm.title.value = note.title;
-    updateNoteForm.body.value = note.body;
-  });
- 
-  const getNoteById = async (id) => {
-    const response = await fetch(`/api/notes/${id}`);
-    const note = await response.json();
-    return note;
-  };
-  */
+
+  // update event listener
+
   const updateButtons = document.querySelectorAll("#updateNoteButton");
   updateButtons.forEach((updateButton) => {
-    updateButton.addEventListener("click", event => {
+    updateButton.addEventListener("click", async (event) => {
       const noteId = event.target.dataset.id;
       console.log("Update button clicked. Note id is: ", noteId);
+      const response = await fetch(`/api/notes/${noteId}`);
+      const noteData = await response.json();
+      console.log("note data at this point: ", noteData);
+
+      const updateTemperatureInput = document.getElementById('updateTemperature');
+      const updateCommentInput = document.getElementById('updateComment');
+
+      updateTemperatureInput.value = noteData.temperature;
+      updateCommentInput.value = noteData.comment;
+
+      const updateNoteForm = document.getElementById("updateNoteForm");
+      updateNoteForm.dataset.id = noteId;
+
+      $('#update-note-modal').modal('show').on('shown.bs.modal', function () {
+        $('#updateTemperature').focus();
+      });
     });
-    /*
-    updateConfirm("Do you want to update the current note?")
-      .then(updateNote)
+
+  });
+  const updateNoteForm = document.getElementById("updateNoteForm");
+  updateNoteForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const noteId = event.target.dataset.id;
+    console.log("Note id inside noteForm is: ", noteId);
+    const updateTemperatureInput = document.getElementById('updateTemperature');
+    const updateCommentInput = document.getElementById('updateComment');
+
+    const noteData = {
+      temperature: updateTemperatureInput.value,
+      comment: updateCommentInput.value
+    };
+
+    updateConfirm("Do you really want to update this note?")
+      .then(() => {
+        const updateConfModal = document.querySelector("#confirm-update");
+        if (updateConfModal) {
+          updateConfModal.addEventListener("shown.bs.modal", () => {
+            updateConfModal.querySelector(".btn-primary").focus();
+          });
+          updateNote(true, noteId, noteData);
+        }
+
+      })
       .catch((error) => {
         if (error) {
-          console.log(error);
+          console.error(error);
         } else {
-          console.log("Update canceled.")
+          updateNote(false);
         }
       });
-    */
   });
+
 </script>
 
 
