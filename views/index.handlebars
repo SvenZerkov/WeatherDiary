@@ -12,9 +12,11 @@
   {{/if}}
   <p>
   <div class="date-view-container">
+    <form id="dateButton" name="dateButton" action="/" method="post">
     <label for="date" class="label-lg">Choose date: </label>
-    <input type="date" class="input-lg" id="date" name="date">
-   <button type="button" onclick="showChosenDay()" class="btn btn-lg">View</button>
+    <input type="date" class="input-lg" id="date" name="date"> 
+   <button onclick="showChosenDay()" type="submit" class="btn btn-lg">View</button></form>
+   </form>
    </div>
    </p>
     
@@ -57,7 +59,6 @@
             <th>Date</th>
             <th>Temperature</th>
             <th>Comments</th>
-            <th></th>
           </tr>
         </thead>
         <tbody id="scrollbar-tbody">
@@ -67,6 +68,7 @@
               <td>{{this.date}}</td>
               <td>{{this.temperature}} &#8451;</td>
               <td>{{this.comment}}</td>
+          {{/each}}
             </div>
             <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
                 data-id="{{this._id}}" value="Update"><br><br>
@@ -74,7 +76,6 @@
                 value="Delete">
             </td>
           </tr>
-          {{/each}}
         </tbody>
       </table>
     </div>
@@ -164,7 +165,6 @@
     </div>
   </div>
 </div>
-
 {{!-- script for event listener on deleteButton --}}
 <script>
   // dev section jquery test
