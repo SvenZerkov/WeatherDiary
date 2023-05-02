@@ -19,11 +19,12 @@
    </form>
    </div>
    </p>
-    
+     <hr>
     <div class="row">
-      <hr>
       <div class="col-sm-12">
-        <h3 class="text-center">Weather history</h3>
+        <h3 class="text-headings">Weather history</h3>
+        <p class="info-text">Here you can see weather data from the date you chose. You cannot change this data. Please be aware that if you don't see anything, you probably did not choose any date. You can do this higher up on this page.</p>
+        <p></p>
         <th><p>{{Date}}</p></th>
         <table class="table table-bordered">
       <tbody>
@@ -51,7 +52,8 @@
       </table>
     </div>
     <div class="col-sm-12">
-      <h3 class="text-center">Personal entries</h3>
+      <h3 class="text-headings">Personal entries</h3>
+      <p class="info-text">Under this message, you are able to see, modify, and delete your own entries. If you cannot see anything here, but you can see automatically retrieved weather data on the table a little bit higher from this message, that means you have not submitted any personal entries regarding this date. You can submit your own entries under 'Submit personal entries,' lower on this website.</p>
       <p>{{Date}}</p>
       <table id="scrollbar-table" class="table table-bordered">
         <thead id="scrollbar-thead">
@@ -81,10 +83,10 @@
     </div>
 </div>
 <div class="col-sm-4"></div>
+<hr>
 <div class="col-sm-12 personaldiaryentry">
-  <hr>
-  <h3>Personal diary entries</h3>
-
+  <h3 class="text-headings">Submit personal entries</h3>
+<p class="info-text">Submit your personal entries regarding the date you chose here. Please note that the temperature must be between -80 degrees Celsius and +50 degrees Celsius. Also, the Comments field is limited to 200 characters. You don't have to fill in both Temperature and Comments, only one of them is required. After submitting, you will be able to see your entries on this webpage in the section 'Personal entries'.</p>
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -111,7 +113,7 @@
       </tr>
     </tbody>
   </table>
-  <input type="submit" value="Submit">
+  <input type="submit" value="Submit" class="btn btn-submit">
   </form>
 </div>
 

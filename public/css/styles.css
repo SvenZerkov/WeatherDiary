@@ -5,24 +5,22 @@ footer {
   color: #fff;
   padding: 10px;
   margin-top: 20px;
+  position:static;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
-.row hr {
+hr {
   border: none;
-  border-top: 2px solid black;
-  margin-top: 40px;
-  margin-bottom: 50px;
+  border-top: 1.5px solid black;
+  margin-top: 50px;
+  margin-bottom: 30px;
+  width: 75%;
 }
 
 .personaldiaryentry {
-  margin-top: 20rem;
-}
-
-.personaldiaryentry hr {
-  border: none;
-  border-top: 2px solid black;
-  margin-top: 10px;
-  margin-bottom: 50px;
+  margin-top: 0px;
 }
 
 #comment {
@@ -54,6 +52,20 @@ header {
   font-size: 18px;
 }
 
+.text-headings {
+  text-align: center;
+  color: black;
+  margin-top: 30px;
+  font-size: 24px;
+}
+
+.info-text {
+  text-align: center;
+  color: black;
+  margin-top: 10px;
+  font-size: 15px;
+}
+
 .logo img {
   max-height: 100px; 
   width: auto; 
@@ -63,6 +75,16 @@ header {
   padding: 18px 30px;
   font-size: 18px;
   margin-left: 10px;
+}
+
+.btn-submit {
+  padding: 18px 30px;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .label-lg {
