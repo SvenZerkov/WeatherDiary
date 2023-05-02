@@ -179,6 +179,8 @@
   } else {
     console.log('jQuery is loaded');
   };
+
+  // function for confirming the delete
   const deleteConfirm = (msg) => {
     return new Promise((resolve, reject) => {
       const confirmBox = $("#confirm-delete");
@@ -196,17 +198,37 @@
         reject();
       });
       confirmBox.show();
+      confirmBox.find(".yes-delete").attr("tabindex", "0").focus();
     });
   };
-  const deleteNote = () => {
-    console.log("Note deleted.");
-    // send req to server to handle the delete after ideing correct note
+
+  // function for deleting the note
+  const deleteNote = async (noteId) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/api/notes/${noteId}`);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error.response.data);
+    }
   };
+
+  // del eventlistener
   const deleteButtons = document.querySelectorAll("#deleteNoteButton");
   deleteButtons.forEach((deleteButton) => {
-    deleteButton.addEventListener("click", () => {
+    deleteButton.addEventListener("click", (event) => {
+      const noteId = event.target.dataset.id;
+      console.log("Delete button clicked. Note id is: ", noteId);
       deleteConfirm("Do you want to delete the current note?")
-        .then(deleteNote)
+        .then(() => {
+          const deleteModal = document.querySelector("#confirm-delete");
+          if (deleteModal) {
+            deleteModal.addEventListener("shown.bs.modal", () => {
+              deleteModal.querySelector(".btn-primary").focus();
+            });
+
+          }
+          deleteNote(noteId);
+        })
         .catch((error) => {
           if (error) {
             console.error(error);
