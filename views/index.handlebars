@@ -70,10 +70,10 @@
               <td>{{this.comment}}</td>
             </div>
             <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
-                data-id="{{this._id}}" value="Update"><br><br>
-              <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
-                value="Delete">
-            </td>
+                  data-id="{{this._id}}" value="Update"><br><br>
+                <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
+                  data-id="{{this._id}}" value="Delete">
+              </td>
           </tr>
           {{/each}}
         </tbody>
@@ -116,12 +116,12 @@
 </div>
 
 {{!-- delete modal --}}
-<div id="confirm-delete" class="modal">
-  <div class="modal-dialog">
+<div id="confirm-delete" class="modal" role="dialog" aria-labelledby="confirm-deleteLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Confirm delete</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
       </div>
       <div class="modal-body">
         <p class="message"></p>
@@ -135,25 +135,30 @@
 </div>
 
 {{!-- update modal --}}
-<div id="updateNoteModal" class="modal">
-  <div class="modal-content">
-    <h4>Update Note</h4>
-    <button type="button" class="close" data-dismiss="modal">&times;</button>
-    <form id="updateNoteForm">
-      <input type="text" id="updateTitle" name="title" placeholder="Title" required>
-      <textarea id="updateBody" name="body" placeholder="Body" required></textarea>
-      <button type="submit">Update</button>
-    </form>
+<div id="update-note-modal" class="modal" role="dialog" aria-labelledby="update-note-modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Update Note</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+      </div>
+      <form id="updateNoteForm">
+        <input type="number" id="updateTemperature" name="temperature" placeholder="Temperature">
+        <textarea id="updateComment" name="comment" placeholder="Comment"></textarea>
+        <button type="submit">Update</button>
+      </form>
+
+    </div>
   </div>
 </div>
 
 {{!-- update confirm modal --}}
-<div id="confirm-update" class="modal">
-  <div class="modal-dialog">
+<div id="confirm-update" class="modal" role="dialog" aria-labelledby="confirm-updateLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Confirm update</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
       </div>
       <div class="modal-body">
         <p class="message"></p>
@@ -165,6 +170,7 @@
     </div>
   </div>
 </div>
+
 {{!-- script for event listener on deleteButton --}}
 <script>
   // dev section jquery test
