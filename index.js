@@ -16,7 +16,7 @@ app.engine('handlebars', exphbs.engine({
 }));
 app.use(express.static('public'));
 app.use("", require("./routes/notes.js"));
-
+app.use(express.json());
 app.set('view engine', 'handlebars');
 
 //Tietokantaan yhdistäminen
