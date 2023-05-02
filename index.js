@@ -66,8 +66,8 @@ app.post('/', async (req, res) => {
         weatherInfo = {
 
             temperature : data.daily.temperature_2m_mean.toString() + " °C",
-            sunrise : data.daily.sunrise.toString(),
-            sunset : data.daily.sunset.toString(),
+            sunrise : data.daily.sunrise.toString().replace("T"," "),
+            sunset : data.daily.sunset.toString().replace("T"," "),
             precipitation : data.daily.precipitation_sum.toString() + " mm",
             windspeed : data.daily.windspeed_10m_max.toString() + " m/s",
             };
