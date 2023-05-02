@@ -139,7 +139,6 @@ app.post("/api/notes/", async (req, res) => {
 
 // PATCH Santeri 
 app.patch("/api/notes/:id", async (req, res) => {
-    console.log(req.body.date);
     const id = req.params.id;
     console.log(id);
 
