@@ -276,21 +276,13 @@
     console.log(`Note id received in updateNote function: ${noteId}`);
     if (confirmed) {
       try {
-        const response = await fetch(`http://localhost:3000/api/notes/${noteId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(noteData)
-        });
+        const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, noteData);
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log(`Note updated, ${data}`);
+        if (response.status === 200) {
+          console.log(`Note updated, ${JSON.stringify(response.data)}`);
         } else {
           console.error(`HTTP error: ${response.status}`);
         }
-
       } catch (error) {
         console.error(error);
       }
@@ -323,8 +315,6 @@
       $('#update-note-modal').modal('show').on('shown.bs.modal', function () {
         $('#updateTemperature').focus();
       });
-
-
     });
 
   });
