@@ -15,7 +15,7 @@
     <form id="dateButton" name="dateButton" action="/" method="post">
     <label for="date" class="label-lg">Choose date: </label>
     <input type="date" class="input-lg" id="date" name="date"> 
-   <button onclick="showChosenDay()" type="submit" class="btn btn-lg">View</button>
+   <button id="btn" onclick="showChosenDay()" type="submit" class="btn btn-lg">View</button>
    </form>
    </div>
    </p>
@@ -85,7 +85,7 @@
 <div class="col-sm-12 personaldiaryentry">
   <h3 class="text-headings">Submit personal entries</h3>
 <p class="info-text">Submit your personal entries regarding the date you chose here. Please note that the temperature must be between -80 degrees Celsius and +50 degrees Celsius. Also, the Comments field is limited to 200 characters. You don't have to fill in both Temperature and Comments, only one of them is required. After submitting, you will be able to see your entries on this webpage in the section 'Personal entries'.</p>
-  <form id="addComment" name="addComment" action="/api/notes/" method="post">
+  <form id="addComment" name="addComment" action="/api/notes/" onsubmit="return validateForm()" method="post">
   <table id="addNotes" class="table table-bordered">
     <thead>
       <tr>
@@ -373,5 +373,38 @@
   document.getElementById("date").setAttribute("max", currentDate);
 </script>
 
+<script>
+  function validateForm() {
+  let x = document.forms["addComment"]["temperature"].value;
+  let y = document.forms["addComment"]["dateToAdd"].value;
+  let z = document.forms["addComment"]["comment"].value;
+  if (x == "" && z == "") {
+    alert("Please at least provide a temperature or a comment.");
+    return false;
+  }
+  if (y == "") {
+    alert("Pleace pick a date.");
+    return false;
+  }
+  else { 
+    return true;
+    }
+
+}
+
+const btn = document.getElementById('btn');
+
+btn.addEventListener('click', function handleClick() {
+  const dateInput = document.getElementById('date');
+
+  if (!dateInput.value) {
+    alert('Please pick a date first');
+    return null;
+  } else {
+    return true;
+  }
+});
+
+</script>
 
 </div>
