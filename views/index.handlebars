@@ -233,6 +233,7 @@
       try {
         const response = await axios.delete(`http://localhost:3000/api/notes/${noteId}`);
         console.log(response.data);
+        alert("Note deleted!");
       } catch (error) {
         console.error(error.response.data);
       }
@@ -302,6 +303,7 @@
           const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, noteData);
 
           if (response.status === 200) {
+            alert("Note updated!");
             console.log(`Note updated, ${JSON.stringify(response.data)}`);
           } else {
             console.error(`HTTP error: ${response.status}`);
