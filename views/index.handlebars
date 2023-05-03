@@ -3,9 +3,9 @@
 <div class="container">
 
   {{#if desc}}
-    <p class="text-center ">{{desc}}</p>
+  <p class="text-center ">{{desc}}</p>
   {{else}}
-    <p>No content</p>
+  <p>No content</p>
   {{/if}}
   <p>
   <div class="date-view-container">
@@ -56,7 +56,10 @@
     </div>
     <div class="col-sm-12">
       <h3 class="text-headings">Personal entries</h3>
-      <p class="info-text">Under this message, you are able to see, modify, and delete your own entries. If you cannot see anything here, but you can see automatically retrieved weather data on the table a little bit higher from this message, that means you have not submitted any personal entries regarding this date. You can submit your own entries under 'Submit personal entries,' lower on this website.</p>
+      <p class="info-text">Under this message, you are able to see, modify, and delete your own entries. If you cannot
+        see anything here, but you can see automatically retrieved weather data on the table a little bit higher from
+        this message, that means you have not submitted any personal entries regarding this date. You can submit your
+        own entries under 'Submit personal entries,' lower on this website.</p>
       <table id="scrollbar-table" class="table table-bordered">
         <thead id="scrollbar-thead">
           <tr>
@@ -74,10 +77,10 @@
               <td>{{this.comment}}</td>
             </div>
             <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
-                  data-id="{{this._id}}" value="Update"><br><br>
-                <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
-                  data-id="{{this._id}}" value="Delete">
-              </td>
+                data-id="{{this._id}}" value="Update"><br><br>
+              <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
+                data-id="{{this._id}}" value="Delete">
+            </td>
           </tr>
           {{/each}}
         </tbody>
@@ -122,264 +125,281 @@
   </form>
 </div>
 
-{{!-- delete modal --}}
-<div id="confirm-delete" class="modal" role="dialog" aria-labelledby="confirm-deleteLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm delete</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p class="message"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger yes-delete">Yes</button>
-        <button type="button" class="btn btn-default no-delete" data-dismiss="modal">No</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-{{!-- update modal --}}
-<div id="update-note-modal" class="modal" role="dialog" aria-labelledby="update-note-modalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Update Note</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-      </div>
-      <form id="updateNoteForm">
-       <label for="updateTemperature">Temperature:</label>
-        <input type="number" id="updateTemperature" name="temperature" placeholder="Temperature">
-       <label for="updateComment">Comment:</label>
-        <textarea id="updateComment" name="comment" placeholder="Comment"></textarea>
-        <button type="submit">Update</button>
-      </form>
-
-    </div>
-  </div>
-</div>
-
-{{!-- update confirm modal --}}
-<div id="confirm-update" class="modal" role="dialog" aria-labelledby="confirm-updateLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm update</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-      </div>
-      <div class="modal-body">
-        <p class="message"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger yes-update">Yes</button>
-        <button type="button" class="btn btn-default no-update" data-dismiss="modal">No</button>
+  {{!-- delete modal --}}
+  <div id="confirm-delete" class="modal" role="dialog" aria-labelledby="confirm-deleteLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Confirm delete</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="message"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger yes-delete">Yes</button>
+          <button type="button" class="btn btn-default no-delete" data-dismiss="modal">No</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-{{!-- script for event listener on deleteButton --}}
-<script>
-  // dev section jquery test
-  if (typeof jQuery == 'undefined') {
-    console.log('jQuery is not loaded');
-  } else {
-    console.log('jQuery is loaded');
-  };
+  {{!-- update modal --}}
+  <div id="update-note-modal" class="modal" role="dialog" aria-labelledby="update-note-modalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Update Note {{Date}} </h4>
 
-  // function for confirming the delete
-  const deleteConfirm = (msg) => {
-    return new Promise((resolve, reject) => {
-      const confirmBox = $("#confirm-delete");
-      confirmBox.find(".message").text(msg);
-      confirmBox.find(".yes-delete").click(() => {
-        confirmBox.hide();
-        resolve();
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <form id="updateNoteForm">
+          <div class="modal-body">
+            <div id="label">Temperature:</div>
+            <label for="updateTemperature">{{temperature}}</label>
+            <input type="number" id="updateTemperature" name="temperature" placeholder="Temperature" min="-80" max="50"
+              step="0.1" aria-describedby="temperature-update-field"
+              onfocus="document.getElementById('update-note-modal').focus();">
+            <p class="help-block" id="temperature-update-field">Temperature from -80 <span
+                aria-label="degrees Celsius">&#8451;</span>
+              to +50 <span aria-label="degrees Celsius">&#8451;</span></p>
+
+            <div id="label">Comment:</div>
+            <label for="updateComment"></label>
+            <textarea id="updateComment" name="comment" placeholder="Comment" maxlength="200"
+              aria-describedby="comment-update-field"></textarea>
+            <p class="help-block" id="comment-update-field">Comment maximum length is 200 characters.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="submit">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {{!-- update confirm modal --}}
+  <div id="confirm-update" class="modal" role="dialog" aria-labelledby="confirm-updateLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Confirm update</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="message"></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger yes-update">Yes</button>
+          <button type="button" class="btn btn-default no-update" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{!-- script for event listener on deleteButton --}}
+  <script>
+    // dev section jquery test
+    if (typeof jQuery == 'undefined') {
+      console.log('jQuery is not loaded');
+    } else {
+      console.log('jQuery is loaded');
+    };
+
+    // function for confirming the delete
+    const deleteConfirm = (msg) => {
+      return new Promise((resolve, reject) => {
+        const confirmBox = $("#confirm-delete");
+        confirmBox.find(".message").text(msg);
+        confirmBox.find(".yes-delete").click(() => {
+          confirmBox.hide();
+          resolve();
+        });
+        confirmBox.find(".no-delete").click(() => {
+          confirmBox.hide();
+          reject();
+        });
+        confirmBox.find(".close").click(() => {
+          confirmBox.hide();
+          reject();
+        });
+        confirmBox.show();
+        confirmBox.find(".yes-delete").attr("tabindex", "0").focus();
       });
-      confirmBox.find(".no-delete").click(() => {
-        confirmBox.hide();
-        reject();
+    };
+
+    // function for deleting the note
+    const deleteNote = async (noteId) => {
+      try {
+        const response = await axios.delete(`http://localhost:3000/api/notes/${noteId}`);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error.response.data);
+      }
+    };
+
+    // del eventlistener
+    const deleteButtons = document.querySelectorAll("#deleteNoteButton");
+    deleteButtons.forEach((deleteButton) => {
+      deleteButton.addEventListener("click", (event) => {
+        const noteId = event.target.dataset.id;
+        console.log("Delete button clicked. Note id is: ", noteId);
+        deleteConfirm("Do you want to delete the current note?")
+          .then(() => {
+            const deleteModal = document.querySelector("#confirm-delete");
+            if (deleteModal) {
+              deleteModal.addEventListener("shown.bs.modal", () => {
+                deleteModal.querySelector(".btn-primary").focus();
+              });
+
+            }
+            deleteNote(noteId);
+          })
+          .catch((error) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log("Deletion canceled.");
+            }
+          });
       });
-      confirmBox.find(".close").click(() => {
-        confirmBox.hide();
-        reject();
-      });
-      confirmBox.show();
-      confirmBox.find(".yes-delete").attr("tabindex", "0").focus();
     });
-  };
+  </script>
 
-  // function for deleting the note
-  const deleteNote = async (noteId) => {
-    try {
-      const response = await axios.delete(`http://localhost:3000/api/notes/${noteId}`);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error.response.data);
-    }
-  };
+  {{!-- script for event listener on update button --}}
+  <script>
+    // func to confirm update
+    const updateConfirm = (msg) => {
+      return new Promise((resolve, reject) => {
+        const confirmBox = $("#confirm-update");
+        confirmBox.find(".message").text(msg);
+        confirmBox.find(".yes-update").click(() => {
+          confirmBox.hide();
+          $('#update-note-modal').modal('hide');
+          resolve();
+        });
+        confirmBox.find(".no-update").click(() => {
+          confirmBox.hide();
+          $('#update-note-modal').modal('hide');
+          reject();
+        });
+        confirmBox.find(".close").click(() => {
+          confirmBox.hide();
+          $('#update-note-modal').modal('hide');
+          reject();
+        });
+        confirmBox.show();
+        confirmBox.find(".yes-update").attr("tabindex", "0").focus();
+      });
+    };
 
-  // del eventlistener
-  const deleteButtons = document.querySelectorAll("#deleteNoteButton");
-  deleteButtons.forEach((deleteButton) => {
-    deleteButton.addEventListener("click", (event) => {
-      const noteId = event.target.dataset.id;
-      console.log("Delete button clicked. Note id is: ", noteId);
-      deleteConfirm("Do you want to delete the current note?")
-        .then(() => {
-          const deleteModal = document.querySelector("#confirm-delete");
-          if (deleteModal) {
-            deleteModal.addEventListener("shown.bs.modal", () => {
-              deleteModal.querySelector(".btn-primary").focus();
-            });
+    // func to update note
+    const updateNote = async (confirmed, noteId, noteData) => {
+      console.log("Note data passed to updateNote: ", noteData);
+      console.log(`Note id received in updateNote function: ${noteId}`);
+      if (confirmed) {
+        try {
+          const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, noteData);
 
+          if (response.status === 200) {
+            console.log(`Note updated, ${JSON.stringify(response.data)}`);
+          } else {
+            console.error(`HTTP error: ${response.status}`);
           }
-          deleteNote(noteId);
+        } catch (error) {
+          console.error(error);
+        }
+
+      } else {
+        console.log("update canceled");
+      }
+    };
+
+
+    // update event listener
+
+    const updateButtons = document.querySelectorAll("#updateNoteButton");
+    updateButtons.forEach((updateButton) => {
+      updateButton.addEventListener("click", async (event) => {
+        const noteId = event.target.dataset.id;
+        console.log("Update button clicked. Note id is: ", noteId);
+        const response = await fetch(`/api/notes/${noteId}`);
+        const noteData = await response.json();
+        console.log("note data at this point: ", noteData);
+
+        const updateTemperatureInput = document.getElementById('updateTemperature');
+        const updateCommentInput = document.getElementById('updateComment');
+
+        updateTemperatureInput.value = noteData.temperature;
+        updateCommentInput.value = noteData.comment;
+
+        const updateNoteForm = document.getElementById("updateNoteForm");
+        updateNoteForm.dataset.id = noteId;
+
+        $('#update-note-modal').modal('show').on('shown.bs.modal', function () {
+          $('#updateTemperature').focus();
+        });
+      });
+
+
+    });
+    const updateNoteForm = document.getElementById("updateNoteForm");
+    updateNoteForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const noteId = event.target.dataset.id;
+      console.log("Note id inside noteForm is: ", noteId);
+      const updateTemperatureInput = document.getElementById('updateTemperature');
+      const updateCommentInput = document.getElementById('updateComment');
+
+      const noteData = {
+        temperature: updateTemperatureInput.value,
+        comment: updateCommentInput.value
+      };
+
+      updateConfirm("Do you really want to update this note?")
+        .then(() => {
+          const updateConfModal = document.querySelector("#confirm-update");
+          if (updateConfModal) {
+            updateConfModal.addEventListener("shown.bs.modal", () => {
+              updateConfModal.querySelector(".btn-primary").focus();
+            });
+            updateNote(true, noteId, noteData);
+          }
+
         })
         .catch((error) => {
           if (error) {
             console.error(error);
           } else {
-            console.log("Deletion canceled.");
+            updateNote(false);
           }
         });
     });
-  });
-</script>
 
-{{!-- script for event listener on update button --}}
-<script>
-  // func to confirm update
-  const updateConfirm = (msg) => {
-    return new Promise((resolve, reject) => {
-      const confirmBox = $("#confirm-update");
-      confirmBox.find(".message").text(msg);
-      confirmBox.find(".yes-update").click(() => {
-        confirmBox.hide();
-        $('#update-note-modal').modal('hide');
-        resolve();
-      });
-      confirmBox.find(".no-update").click(() => {
-        confirmBox.hide();
-        $('#update-note-modal').modal('hide');
-        reject();
-      });
-      confirmBox.find(".close").click(() => {
-        confirmBox.hide();
-        $('#update-note-modal').modal('hide');
-        reject();
-      });
-      confirmBox.show();
-      confirmBox.find(".yes-update").attr("tabindex", "0").focus();
-    });
-  };
 
-  // func to update note
-  const updateNote = async (confirmed, noteId, noteData) => {
-    console.log("Note data passed to updateNote: ", noteData);
-    console.log(`Note id received in updateNote function: ${noteId}`);
-    if (confirmed) {
-      try {
-        const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, noteData);
+  </script>
 
-        if (response.status === 200) {
-          console.log(`Note updated, ${JSON.stringify(response.data)}`);
-        } else {
-          console.error(`HTTP error: ${response.status}`);
-        }
-      } catch (error) {
-        console.error(error);
+
+  {{!-- Temperature-kentän validointi - Lämpötilan on oltava -80 ja 50 välillä. --}}
+  <script>
+    const form = document.querySelector('form');
+    const temperatureInput = document.getElementById('temperature');
+    const temperatureFalse = document.getElementById('temperature-false');
+    form.addEventListener('submit', (event) => {
+      if (!temperatureInput.checkValidity()) {
+        temperatureFalse.style.display = 'block';
+        event.preventDefault();
+      } else {
+        temperatureFalse.style.display = 'none';
       }
-
-    } else {
-      console.log("update canceled");
-    }
-  };
-
-  // update event listener
-
-  const updateButtons = document.querySelectorAll("#updateNoteButton");
-  updateButtons.forEach((updateButton) => {
-    updateButton.addEventListener("click", async (event) => {
-      const noteId = event.target.dataset.id;
-      console.log("Update button clicked. Note id is: ", noteId);
-      const response = await fetch(`/api/notes/${noteId}`);
-      const noteData = await response.json();
-      console.log("note data at this point: ", noteData);
-
-      const updateTemperatureInput = document.getElementById('updateTemperature');
-      const updateCommentInput = document.getElementById('updateComment');
-
-      updateTemperatureInput.value = noteData.temperature;
-      updateCommentInput.value = noteData.comment;
-
-      const updateNoteForm = document.getElementById("updateNoteForm");
-      updateNoteForm.dataset.id = noteId;
-
-      $('#update-note-modal').modal('show').on('shown.bs.modal', function () {
-        $('#updateTemperature').focus();
-      });
     });
+  </script>
 
-  });
-  const updateNoteForm = document.getElementById("updateNoteForm");
-  updateNoteForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const noteId = event.target.dataset.id;
-    console.log("Note id inside noteForm is: ", noteId);
-    const updateTemperatureInput = document.getElementById('updateTemperature');
-    const updateCommentInput = document.getElementById('updateComment');
-
-    const noteData = {
-      temperature: updateTemperatureInput.value,
-      comment: updateCommentInput.value
-    };
-
-    updateConfirm("Do you really want to update this note?")
-      .then(() => {
-        const updateConfModal = document.querySelector("#confirm-update");
-        if (updateConfModal) {
-          updateConfModal.addEventListener("shown.bs.modal", () => {
-            updateConfModal.querySelector(".btn-primary").focus();
-          });
-          updateNote(true, noteId, noteData);
-        }
-
-      })
-      .catch((error) => {
-        if (error) {
-          console.error(error);
-        } else {
-          updateNote(false);
-        }
-      });
-  });
-
-</script>
-
-
-{{!-- Temperature-kentän validointi - Lämpötilan on oltava -80 ja 50 välillä. --}}
-<script>
-  const form = document.querySelector('form');
-  const temperatureInput = document.getElementById('temperature');
-  const temperatureFalse = document.getElementById('temperature-false');
-  form.addEventListener('submit', (event) => {
-    if (!temperatureInput.checkValidity()) {
-      temperatureFalse.style.display = 'block';
-      event.preventDefault();
-    } else {
-      temperatureFalse.style.display = 'none';
-    }
-  });
-</script>
-
-{{!-- Päivämäärän maksimiarvon asettaminen sivun lataamispäivään --}}
-<script>
-  const currentDate = new Date().toISOString().split("T")[0];
-  document.getElementById("date").setAttribute("max", currentDate);
-</script>
+  {{!-- Päivämäärän maksimiarvon asettaminen sivun lataamispäivään --}}
+  <script>
+    const currentDate = new Date().toISOString().split("T")[0];
+    document.getElementById("date").setAttribute("max", currentDate);
+  </script>
 
 <script>
   function validateForm() {

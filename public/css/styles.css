@@ -171,3 +171,17 @@ header {
     margin: 10px;
   }
 }
+
+/* Modals */
+.modal-title {
+  text-align: center;
+  
+}
+
+.modal-title {
+  font-size: 24px;
+}
+.modal-body {
+  background-color: aqua;
+}
+
