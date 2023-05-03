@@ -134,3 +134,9 @@ header {
   width: 400px;
   align-items: center;
 }
+
+/*Add personal notes; read-only*/
+
+#dateToAdd {
+  border: 0;
+}
