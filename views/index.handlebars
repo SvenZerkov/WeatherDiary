@@ -93,7 +93,7 @@
   <table id="addNotes" class="table table-bordered">
     <thead>
       <tr>
-        <th>Date</th>
+        <th><label for="dateToAdd">Date</label></th>
         <th><label for="temperature">Temperature</label></th>
         <th><label for="comment">Comments</label></th>
       </tr>
@@ -106,8 +106,10 @@
         </td>
         <td>
           <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
+          <br>
+          <span id="temperature-between" class="invalid-temperature">Between -80 and 50.</span>
         </td>
-        {{!-- <span id="temperature-between" class="invalid-temperature">between -80 and 50.</span> --}}
+       
         <td>
           <input type="text" id="comment" name="comment" value="" maxlength="200">
           <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
@@ -148,7 +150,9 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
       </div>
       <form id="updateNoteForm">
+       <label for="updateTemperature">Temperature:</label>
         <input type="number" id="updateTemperature" name="temperature" placeholder="Temperature">
+       <label for="updateComment">Comment:</label>
         <textarea id="updateComment" name="comment" placeholder="Comment"></textarea>
         <button type="submit">Update</button>
       </form>
