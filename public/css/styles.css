@@ -114,6 +114,10 @@ header {
   margin-top: 20px;
 }
 
+#deleteNoteButton {
+  background-color: darkred;
+}
+
 #weatherInfo {
   display: table;
   table-layout: fixed;
