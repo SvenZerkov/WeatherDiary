@@ -15,7 +15,7 @@
     <form id="dateButton" name="dateButton" action="/" method="post">
     <label for="date" class="label-lg">Choose date: </label>
     <input type="date" class="input-lg" id="date" name="date"> 
-   <button onclick="showChosenDay()" type="submit" class="btn btn-lg">View</button></form>
+   <button onclick="showChosenDay()" type="submit" class="btn btn-lg">View</button>
    </form>
    </div>
    </p>
@@ -25,7 +25,6 @@
         <h3 class="text-headings">Weather history</h3>
         <p class="info-text">Here you can see weather data from the date you chose. You cannot change this data. Please be aware that if you don't see anything, you probably did not choose any date. You can do this higher up on this page.</p>
         <p></p>
-        <th><p>{{Date}}</p></th>
         <table class="table table-bordered">
       <tbody>
         <tr>
@@ -54,7 +53,6 @@
     <div class="col-sm-12">
       <h3 class="text-headings">Personal entries</h3>
       <p class="info-text">Under this message, you are able to see, modify, and delete your own entries. If you cannot see anything here, but you can see automatically retrieved weather data on the table a little bit higher from this message, that means you have not submitted any personal entries regarding this date. You can submit your own entries under 'Submit personal entries,' lower on this website.</p>
-      <p>{{Date}}</p>
       <table id="scrollbar-table" class="table table-bordered">
         <thead id="scrollbar-thead">
           <tr>
@@ -87,6 +85,7 @@
 <div class="col-sm-12 personaldiaryentry">
   <h3 class="text-headings">Submit personal entries</h3>
 <p class="info-text">Submit your personal entries regarding the date you chose here. Please note that the temperature must be between -80 degrees Celsius and +50 degrees Celsius. Also, the Comments field is limited to 200 characters. You don't have to fill in both Temperature and Comments, only one of them is required. After submitting, you will be able to see your entries on this webpage in the section 'Personal entries'.</p>
+  <form id="addComment" name="addComment" action="/api/notes/" method="post">
   <table class="table table-bordered">
     <thead>
       <tr>
@@ -99,7 +98,7 @@
       <tr>
         {{!-- <td><input type="date" id="date" name="date"></td> --}}
         <td>
-          <p>{{Date}}</p>
+          <input type="text" readonly="readonly" id="dateToAdd" name="dateToAdd" value={{Date}}>
         </td>
         <td>
           <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">

@@ -79,7 +79,8 @@ app.post('/', async (req, res) => {
             weatherDetails: weatherInfo,
             Date: showChosenDay(dateInput),
         });
-    })
+            
+    });
 });
 
 
@@ -144,18 +145,23 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 // CREATE Rosa
 
 app.post("/api/notes/", async (req, res) => {
-
+    
     try {
-        const newNote = new Note(req.body);
+        const formattedDate = useChosenDay(req.body.dateToAdd);
+        const newNote = new Note({
+            date : formattedDate,
+            temperature : req.body.temperature,
+            comment : req.body.comment
+        });
         await newNote.save();
+        //console.log(newNote);
         res.redirect("/");
     }
 
     catch (error) {
         res.status(500).json({ msg: error.message });
     }
-
-});
+})
 
 // PATCH Santeri 
 app.patch("/api/notes/:id", async (req, res) => {
@@ -220,6 +226,21 @@ app.patch('/api/notes/:id', async(req, res, next) => {
     let day = String(MyDate).slice(8, 10);
     //console.log(day);
     let formatDate = day + "." + month + "." + year;
+    //console.log(formatDate);
+    return formatDate;
+  }
+
+  function useChosenDay(date) {
+    let MyDate = date;
+    //console.log(MyDate);
+    // slicing the date, to show in right format
+    let year = String(MyDate).slice(6, 10);
+    //console.log(year);
+    let month = String(MyDate).slice(3, 5);
+    //console.log(month);
+    let day = String(MyDate).slice(0, 2);
+    //console.log(day);
+    let formatDate = year + "-" + month + "-" + day;
     //console.log(formatDate);
     return formatDate;
   }
