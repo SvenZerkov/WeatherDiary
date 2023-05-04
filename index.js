@@ -21,7 +21,7 @@ app.set('view engine', 'handlebars');
 
 //Tietokantaan yhdistäminen
 
-const dbURI = 'mongodb+srv://Team12:WeatherDiary2023@weatherdiary.fssyihy.mongodb.net/UserNotes?retryWrites=true&w=majority';
+const dbURI = process.env.dbURI;
 
 (async () => {
     try {
