@@ -8,52 +8,57 @@
   <p>No content</p>
   {{/if}}
   <p>
+    {{!-- Choosing of date --}}
   <div class="date-view-container">
     <form id="dateButton" name="dateButton" action="/" method="post">
-    <label for="date" class="label-lg">Choose date: </label>
-    <input type="date" class="input-lg" id="date" name="date"> 
-   <button id="btn" onclick="showChosenDay()" type="submit" class="btn btn-lg">View</button>
-   </form>
-   </div>
-   </p>
-     <hr>
-    <div class="row">
-      <div class="col-sm-12">
-        <h2 class="text-headings">Weather history</h2>
-        <p class="info-text">Here you can see weather data from the date you chose. You cannot change this data. Please be aware that if you don't see anything, you probably did not choose any date. You can do this higher up on this page.</p>
-        <p></p>
-        <table class="table table-bordered" id="weatherInfo">
-       <caption class="info-text">Note that latest data might not yet be fully available.</caption>
+      <label for="date" class="label-lg">Choose date: </label>
+      <input type="date" class="input-lg" id="date" name="date">
+      <button id="btn" onclick="showChosenDay()" type="submit" class="btn btn-lg">View</button>
+    </form>
+  </div>
+  </p>
+  <hr>
+  <div class="row">
+    {{!-- weather data of current day from open source --}}
+    <div class="col-sm-12">
+      <h2 class="text-headings">Weather history</h2>
+      <p class="info-text">Here you can see weather data from the date you chose. You cannot change this data. Please be
+        aware that if you don't see anything, you probably did not choose any date. You can do this higher up on this
+        page.</p>
+      <p></p>
+      <table class="table table-bordered" id="weatherInfo">
+        <caption class="info-text">Note that latest data might not yet be fully available.</caption>
         <thead>
-      <tr>
-        <th>Data Type</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-      <tbody>
-        <tr>
-          <td>Temperature:</td>
-          <td>{{weatherDetails.temperature}}</td>
-        </tr>
-        <tr>
-          <td>Sunrise: </td>
-          <td>{{weatherDetails.sunrise}}</td>
-        </tr>
-        <tr>
-          <td>Sunset: </td>
-          <td>{{weatherDetails.sunset}}</td>
-        </tr>
-        <tr>
-          <td>Precipitation: </td>
-          <td>{{weatherDetails.precipitation}}</td>
-        </tr>
-        <tr>
-          <td>Windspeed: </td>
-          <td>{{weatherDetails.windspeed}}</td>
-        </tr>
-      </tbody>
+          <tr>
+            <th>Data Type</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Temperature:</td>
+            <td>{{weatherDetails.temperature}}</td>
+          </tr>
+          <tr>
+            <td>Sunrise: </td>
+            <td>{{weatherDetails.sunrise}}</td>
+          </tr>
+          <tr>
+            <td>Sunset: </td>
+            <td>{{weatherDetails.sunset}}</td>
+          </tr>
+          <tr>
+            <td>Precipitation: </td>
+            <td>{{weatherDetails.precipitation}}</td>
+          </tr>
+          <tr>
+            <td>Windspeed: </td>
+            <td>{{weatherDetails.windspeed}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
+    {{!-- Personal entries table --}}
     <div class="col-sm-12">
       <h3 class="text-headings">Personal entries</h3>
       <p class="info-text">Under this message, you are able to see, modify, and delete your own entries. If you cannot
@@ -70,6 +75,7 @@
           </tr>
         </thead>
         <tbody id="scrollbar-tbody">
+          {{!-- User notes --}}
           {{#each UserNotes}}
           <tr>
             <div class="note">
@@ -77,6 +83,7 @@
               <td>{{this.temperature}} &#8451;</td>
               <td>{{this.comment}}</td>
             </div>
+            {{!-- Function buttons --}}
             <td><input type="button" class="btn btn-primary" aria-label="Update current note" id="updateNoteButton"
                 data-id="{{this._id}}" value="Update"><br><br>
               <input type="button" class="btn btn-danger" aria-label="Delete current note" id="deleteNoteButton"
@@ -87,44 +94,48 @@
         </tbody>
       </table>
     </div>
-</div>
-<div class="col-sm-4"></div>
-<hr>
-<div class="col-sm-12 personaldiaryentry">
-  <h3 class="text-headings">Submit personal entries</h3>
-<p class="info-text">Submit your personal entries regarding the date you chose here. Please note that the temperature must be between -80 degrees Celsius and +50 degrees Celsius. Also, the Comments field is limited to 200 characters. You don't have to fill in both Temperature and Comments, only one of them is required. After submitting, you will be able to see your entries on this webpage in the section 'Personal entries'.</p>
-  <form id="addComment" name="addComment" action="/api/notes/" onsubmit="return validateForm()" method="post">
-  <table id="addNotes" class="table table-bordered">
-    <thead>
-      <tr>
-        <th><label for="dateToAdd">Date</label></th>
-        <th><label for="temperature">Temperature</label></th>
-        <th><label for="comment">Comments</label></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        {{!-- <td><input type="date" id="date" name="date"></td> --}}
-        <td>
-          <input type="text" readonly="readonly" id="dateToAdd" name="dateToAdd" value={{Date}}>
-        </td>
-        <td>
-          <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
-          <br>
-          <span id="temperature-between" class="invalid-temperature">Between -80 and 50.</span>
-        </td>
-       
-        <td>
-          <input type="text" id="comment" name="comment" value="" maxlength="200">
-          <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
-            200.</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <input type="submit" value="Submit" class="btn btn-submit">
-  </form>
-</div>
+  </div>
+  <div class="col-sm-4"></div>
+  <hr>
+  {{!-- diary entry --}}
+  <div class="col-sm-12 personaldiaryentry">
+    <h3 class="text-headings">Submit personal entries</h3>
+    <p class="info-text">Submit your personal entries regarding the date you chose here. Please note that the
+      temperature must be between -80 degrees Celsius and +50 degrees Celsius. Also, the Comments field is limited to
+      200 characters. You don't have to fill in both Temperature and Comments, only one of them is required. After
+      submitting, you will be able to see your entries on this webpage in the section 'Personal entries'.</p>
+    <form id="addComment" name="addComment" action="/api/notes/" onsubmit="return validateForm()" method="post">
+      <table id="addNotes" class="table table-bordered">
+        <thead>
+          <tr>
+            <th><label for="dateToAdd">Date</label></th>
+            <th><label for="temperature">Temperature</label></th>
+            <th><label for="comment">Comments</label></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+
+            <td>
+              <input type="text" readonly="readonly" id="dateToAdd" name="dateToAdd" value={{Date}}>
+            </td>
+            <td>
+              <input type="number" id="temperature" name="temperature" value="" min="-80" max="50" step="0.1">
+              <br>
+              <span id="temperature-between" class="invalid-temperature">Between -80 and 50.</span>
+            </td>
+
+            <td>
+              <input type="text" id="comment" name="comment" value="" maxlength="200">
+              <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
+                200.</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <input type="submit" value="Submit" class="btn btn-submit">
+    </form>
+  </div>
 
   {{!-- delete modal --}}
   <div id="confirm-delete" class="modal" role="dialog" aria-label="confirm-deleteLabel">
@@ -156,16 +167,15 @@
         </div>
         <form id="updateNoteForm">
           <div class="modal-body">
-            
+
             <label for="updateTemperature">Temperature &#8451;:</label>
             <input type="number" id="updateTemperature" name="temperature" placeholder="Temperature" min="-80" max="50"
-              step="0.1" aria-describedby="temperature-update-field"
-              onfocus="document.getElementById('update-note-modal').focus();">
+              step="0.1" aria-describedby="temperature-update-field">
             <p class="help-block" id="temperature-update-field">Temperature from -80 <span
                 aria-label="degrees Celsius">&#8451;</span>
               to +50 <span aria-label="degrees Celsius">&#8451;</span></p>
 
-            
+
             <label for="updateComment">Comment:</label>
             <textarea id="updateComment" name="comment" placeholder="Comment" maxlength="200"
               aria-describedby="comment-update-field"></textarea>
@@ -346,6 +356,7 @@
 
 
     });
+    // script to add current notes data to fields
     const updateNoteForm = document.getElementById("updateNoteForm");
     updateNoteForm.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -404,38 +415,38 @@
     document.getElementById("date").setAttribute("max", currentDate);
   </script>
 
-<script>
-  function validateForm() {
-  let x = document.forms["addComment"]["temperature"].value;
-  let y = document.forms["addComment"]["dateToAdd"].value;
-  let z = document.forms["addComment"]["comment"].value;
-  if (x == "" && z == "") {
-    alert("Please at least provide a temperature or a comment.");
-    return false;
-  }
-  if (y == "") {
-    alert("Pleace pick a date.");
-    return false;
-  }
-  else { 
-    return true;
+  <script>
+    function validateForm() {
+      let x = document.forms["addComment"]["temperature"].value;
+      let y = document.forms["addComment"]["dateToAdd"].value;
+      let z = document.forms["addComment"]["comment"].value;
+      if (x == "" && z == "") {
+        alert("Please at least provide a temperature or a comment.");
+        return false;
+      }
+      if (y == "") {
+        alert("Pleace pick a date.");
+        return false;
+      }
+      else {
+        return true;
+      }
+
     }
 
-}
+    const btn = document.getElementById('btn');
 
-const btn = document.getElementById('btn');
+    btn.addEventListener('click', function handleClick() {
+      const dateInput = document.getElementById('date');
 
-btn.addEventListener('click', function handleClick() {
-  const dateInput = document.getElementById('date');
+      if (!dateInput.value) {
+        alert('Please pick a date first');
+        return null;
+      } else {
+        return true;
+      }
+    });
 
-  if (!dateInput.value) {
-    alert('Please pick a date first');
-    return null;
-  } else {
-    return true;
-  }
-});
-
-</script>
+  </script>
 
 </div>
