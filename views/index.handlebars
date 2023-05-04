@@ -127,7 +127,7 @@
 </div>
 
   {{!-- delete modal --}}
-  <div id="confirm-delete" class="modal" role="dialog" aria-labelledby="confirm-deleteLabel">
+  <div id="confirm-delete" class="modal" role="dialog" aria-label="confirm-deleteLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -146,7 +146,7 @@
   </div>
 
   {{!-- update modal --}}
-  <div id="update-note-modal" class="modal" role="dialog" aria-labelledby="update-note-modalLabel">
+  <div id="update-note-modal" class="modal" role="dialog" aria-label="update-note-modalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -156,8 +156,8 @@
         </div>
         <form id="updateNoteForm">
           <div class="modal-body">
-            <div id="temperature-label">Temperature:</div>
-            <label for="updateTemperature">{{temperature}}</label>
+            
+            <label for="updateTemperature">Temperature &#8451;:</label>
             <input type="number" id="updateTemperature" name="temperature" placeholder="Temperature" min="-80" max="50"
               step="0.1" aria-describedby="temperature-update-field"
               onfocus="document.getElementById('update-note-modal').focus();">
@@ -165,8 +165,8 @@
                 aria-label="degrees Celsius">&#8451;</span>
               to +50 <span aria-label="degrees Celsius">&#8451;</span></p>
 
-            <div id="comment-label">Comment:</div>
-            <label for="updateComment"></label>
+            
+            <label for="updateComment">Comment:</label>
             <textarea id="updateComment" name="comment" placeholder="Comment" maxlength="200"
               aria-describedby="comment-update-field"></textarea>
             <p class="help-block" id="comment-update-field">Comment maximum length is 200 characters.</p>
@@ -180,7 +180,7 @@
   </div>
 
   {{!-- update confirm modal --}}
-  <div id="confirm-update" class="modal" role="dialog" aria-labelledby="confirm-updateLabel">
+  <div id="confirm-update" class="modal" role="dialog" aria-label="confirm-updateLabel">
     <div class="modal-dialog  modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
