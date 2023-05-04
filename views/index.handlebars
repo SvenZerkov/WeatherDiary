@@ -26,7 +26,7 @@
         aware that if you don't see anything, you probably did not choose any date. You can do this higher up on this
         page.</p>
       <p></p>
-      <table class="table table-bordered" id="weatherInfo">
+      <table class="table table-bordered" id="weatherInfo" name="ShowWeatherHistory">
         <caption class="info-text">Note that latest data might not yet be fully available.</caption>
         <thead>
           <tr>
@@ -65,7 +65,7 @@
         see anything here, but you can see automatically retrieved weather data on the table a little bit higher from
         this message, that means you have not submitted any personal entries regarding this date. You can submit your
         own entries under 'Submit personal entries,' lower on this website.</p>
-      <table id="scrollbar-table" class="table table-bordered">
+      <table id="scrollbar-table" class="table table-bordered" name="ShowPersonalEntries">
         <thead id="scrollbar-thead">
           <tr>
             <th>Date</th>
@@ -105,7 +105,7 @@
       200 characters. You don't have to fill in both Temperature and Comments, only one of them is required. After
       submitting, you will be able to see your entries on this webpage in the section 'Personal entries'.</p>
     <form id="addComment" name="addComment" action="/api/notes/" onsubmit="return validateForm()" method="post">
-      <table id="addNotes" class="table table-bordered">
+      <table id="addNotes" class="table table-bordered" name="SubmitPersonalEntries">
         <thead>
           <tr>
             <th><label for="dateToAdd">Date</label></th>
@@ -429,6 +429,7 @@
         return false;
       }
       else {
+        alert("Your entry has been saved.");
         return true;
       }
 
