@@ -195,3 +195,12 @@ header {
 #updateNoteForm button[type="submit"] {
   margin-top: 20px;
 }
+
+.modal-footer .btn-danger {
+  overflow: auto;
+  background-color: darkred;
+}
+
+.modal-footer .btn-default {
+  overflow: auto;
+}
