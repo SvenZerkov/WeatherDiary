@@ -115,7 +115,6 @@
         </thead>
         <tbody>
           <tr>
-
             <td>
               <input type="text" readonly="readonly" id="dateToAdd" name="dateToAdd" value={{Date}}>
             </td>
@@ -124,7 +123,6 @@
               <br>
               <span id="temperature-between" class="invalid-temperature">Between -80 and 50.</span>
             </td>
-
             <td>
               <input type="text" id="comment" name="comment" value="" maxlength="200">
               <span id="comment-validation-max-character-amount" class="invalid-amount">Maximum amount of characters is
@@ -415,6 +413,8 @@
     document.getElementById("date").setAttribute("max", currentDate);
   </script>
 
+
+{{!-- Käyttäjän täyttämän lomakkeen validointi --}}
   <script>
     function validateForm() {
       let x = document.forms["addComment"]["temperature"].value;
@@ -436,7 +436,6 @@
     }
 
     const btn = document.getElementById('btn');
-
     btn.addEventListener('click', function handleClick() {
       const dateInput = document.getElementById('date');
 
