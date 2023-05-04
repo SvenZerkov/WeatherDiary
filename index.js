@@ -1,4 +1,5 @@
 const express = require('express');
+const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 require('dotenv').config();
@@ -48,15 +49,16 @@ app.get('/', async (req, res) => {
             weatherDetails: weatherInfo,
             UserNotes: UserNotesEmpty,
         });
-    //})
+
 });
 
 // Etusivun uudelleenlataus päivämäärän mukaan
 
 
-app.post('/', async (req, res) => {
-
-    if (req.body.date) 
+app.post('/', body('date').notEmpty(), async (req, res) => {
+    const result = validationResult(req);
+     
+    if (result.isEmpty())
     {
     console.log(req.body.date);
     const UserNotes = await Note.find({ date: req.body.date});
