@@ -225,6 +225,7 @@
           resolve();
         });
         confirmBox.find(".no-delete").click(() => {
+          alert("Note delete cancelled.")
           confirmBox.hide();
           reject();
         });
@@ -328,7 +329,6 @@
 
 
     // update event listener
-
     const updateButtons = document.querySelectorAll("#updateNoteButton");
     updateButtons.forEach((updateButton) => {
       updateButton.addEventListener("click", async (event) => {
