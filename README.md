@@ -11,8 +11,6 @@ The user can add their "own" notes about the weather to a limited extent (open c
 
 The weather info comes from open API and user updates from their own observations from our own database. 
 
-Filtering option on the web page, e.g. "on which day it snowed".
-
 The user has a (limited) opportunity to update information, add new comments and delete them.  
 
 User cannot update the weather info from the open API. 
