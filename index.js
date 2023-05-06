@@ -156,7 +156,20 @@ app.delete("/api/notes/(:id)", async (req, res) => {
     }
 });
 
+// Search TOMI
 
+app.post('/', (req, res) => {
+    const startDate = req.body.startDate;
+    const endDate = req.body.endDate;
+    PersonalEntry.find({ date: { $gte: startDate, $lte: endDate } }, (err, entries) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Internal server error');
+      } else {
+        res.render('index', { UserNotes: entries });
+      }
+    });
+  });
 
 // CREATE note
 
