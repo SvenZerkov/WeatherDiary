@@ -114,6 +114,12 @@ header {
   margin-top: 20px;
 }
 
+.no-notes-found{
+  font-size: 45px;
+  text-align: center;
+  margin-top: 40px;
+}
+
 #deleteNoteButton {
   background-color: darkred;
 }

@@ -22,6 +22,7 @@ app.use("", require("./routes/notes.js"));
 app.use(express.json());
 app.set('view engine', 'handlebars');
 
+
 // DB connections
 
 const dbURI = process.env.dbURI;
@@ -158,16 +159,22 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 
 // Search TOMI
 
-app.post('/', (req, res) => {
-    const startDate = req.body.startDate;
-    const endDate = req.body.endDate;
-    PersonalEntry.find({ date: { $gte: startDate, $lte: endDate } }, (err, entries) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send('Internal server error');
-      } else {
-        res.render('index', { UserNotes: entries });
-      }
+app.get('/', (req, res) => {
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+  
+    client.connect((err) => {
+      const db = client.db('Weather Diary');
+      const collection = db.collection('UserNotes');
+  
+      collection.find({
+        date: {
+          $gte: new Date(startDate),
+          $lte: new Date(endDate),
+        },
+      }).toArray((err, notes) => {
+        res.render('index', { notes });
+      });
     });
   });
 

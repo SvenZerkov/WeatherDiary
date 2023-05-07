@@ -61,20 +61,52 @@
     {{!-- Personal entries table --}}
     <div class="col-sm-12">
       <h3 class="text-headings">Personal entries</h3>
+
 <div class="date-view-container">
-<form id="dateButton" name="dateButton" action="/" method="post">
-  <label for="startDate" class="label-lg">Start date: </label>
-  <input type="date" class="input-lg" id="startDate" name="startDate">
-  <label for="endDate" class="label-lg">End date: </label>
-  <input type="date" class="input-lg" id="endDate" name="endDate">
-  <button id="btn" onclick="showChosenRange()" type="submit" class="btn btn-lg">View</button>
+<form action="/" method="get">
+  <label for="startDate">Start Date:</label>
+  <input type="date" id="startDate" name="startDate">
+
+  <label for="endDate">End Date:</label>
+  <input type="date" id="endDate" name="endDate">
+
+  <input type="submit" value="Submit">
 </form>
+
 </div>
+
+{{!-- {{#if UserNotes}}
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Temperature</th>
+        <th>Comment</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each UserNotes}}
+        <tr>
+          <td>{{this.date}}</td>
+          <td>{{this.temperature}}</td>
+          <td>{{this.comment}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+{{else}}
+  <p>No notes found.</p>
+{{/if}} --}}
+
+
+
 
       <p class="info-text">Under this message, you are able to see, modify, and delete your own entries. If you cannot
         see anything here, but you can see automatically retrieved weather data on the table a little bit higher from
         this message, that means you have not submitted any personal entries regarding this date. You can submit your
         own entries under 'Submit personal entries,' lower on this website.</p>
+      
+      {{#if UserNotes}}
       <table id="scrollbar-table" class="table table-bordered" name="ShowPersonalEntries">
         <thead id="scrollbar-thead">
           <tr>
@@ -103,6 +135,10 @@
           {{/each}}
         </tbody>
       </table>
+
+      {{else}}
+  <p class="no-notes-found">No notes found.</p>
+{{/if}}
     </div>
   </div>
   <div class="col-sm-4"></div>
@@ -413,33 +449,7 @@
   </script>
 
 
-{{!-- // SEARCH-FUNCTION --- TOMI --}}
 
-<script>
-
-function showChosenRange() {
-  console.log("showChosenRange function called");
-  var startDate = document.getElementById("startDate").value;
-  var endDate = document.getElementById("endDate").value;
-  console.log("startDate:", startDate);
-  console.log("endDate:", endDate);
-
-
-  var xhr = new XMLHttpRequest();
-  xhr.open("GET", "/search?startDate=" + startDate + "&endDate=" + endDate);
-  xhr.onload = function() {
- 
-    var data = JSON.parse(xhr.responseText);
-
-    UserNotes = data;
-
-    var template = Handlebars.compile(document.getElementById("notes-template").innerHTML);
-    document.getElementById("scrollbar-tbody").innerHTML = template({ UserNotes: UserNotes });
-  };
-  xhr.send();
-}
-
-</script>
 
 
   {{!-- Temperature-kentän validointi - Lämpötilan on oltava -80 ja 50 välillä. --}}
