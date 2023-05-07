@@ -1,10 +1,13 @@
 // essential imports and requirements
 const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+
 const { body, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 require('dotenv').config();
 const path = require("path");
+const moment = require('moment');
 const Note = require("./models/Note");
 const { post } = require('./routes/notes.js');
 const app = express();
@@ -18,6 +21,7 @@ app.engine('handlebars', exphbs.engine({
     partialsDir: path.join(__dirname, "views/partials")
 }));
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 app.use("", require("./routes/notes.js"));
 app.use(express.json());
 app.set('view engine', 'handlebars');
@@ -26,6 +30,8 @@ app.set('view engine', 'handlebars');
 // DB connections
 
 const dbURI = process.env.dbURI;
+
+const client = new MongoClient(dbURI, { useNewUrlParser: true });
 
 (async () => {
     try {
@@ -159,21 +165,32 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 
 // Search TOMI
 
-app.get('/', (req, res) => {
-    const startDate = req.query.startDate;
-    const endDate = req.query.endDate;
+
+app.get('/api/notes/', (req, res, next) => {
+    const startDate = moment(req.query.startDate, 'YYYY-MM-DD').toDate();
+    const endDate = moment(req.query.endDate, 'YYYY-MM-DD').toDate();
   
     client.connect((err) => {
-      const db = client.db('Weather Diary');
-      const collection = db.collection('UserNotes');
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Failed to connect to database');
+      }
+  
+      const db = client.db('UserNotes');
+      const collection = db.collection('notes');
   
       collection.find({
         date: {
-          $gte: new Date(startDate),
-          $lte: new Date(endDate),
+          $gte: startDate,
+          $lte: endDate,
         },
-      }).toArray((err, notes) => {
-        res.render('index', { notes });
+      }).toArray((err, data) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send('Failed to fetch data from database');
+        }
+  
+        res.json(data);
       });
     });
   });

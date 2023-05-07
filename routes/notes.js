@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+const MongoClient = require('mongodb').MongoClient;
+const dbURI = process.env.dbURI;
+const client = new MongoClient(dbURI, { useNewUrlParser: true });
+
+
 const noteController = require("../controllers/notes.js");
 
 /* 
