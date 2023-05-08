@@ -35,6 +35,12 @@ const getNote = async (req, res) => {
 // delete note
 const deleteNote = async (req, res) => {
     const { id } = req.params;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
         const delNote = await Note.findByIdAndDelete(id);
         if (!delNote) {
@@ -51,9 +57,9 @@ const deleteNote = async (req, res) => {
 
 const updateNote = async (req, res) => {
     const { id } = req.params;
-    console.log("id in here is ", id);
+    console.log("id in controllers is ", id);
     console.log("body in here is ", req.body);
-    
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
