@@ -13,21 +13,25 @@ const { post } = require('./routes/notes.js');
 const { validateId } = require('./middleware/validators');
 const app = express();
 const ObjectId = mongoose.Types.ObjectId;
-const routes = require('./routes/notes');
+
 
 // middlewares and configuration
+app.use(express.static('public'));
+app.use(bodyParser.json())
 app.use(express.urlencoded({ extended: false }));
+app.use("", require("./routes/notes.js"));
 
 app.engine('handlebars', exphbs.engine({
     defaultLayout: 'main',
     partialsDir: path.join(__dirname, "views/partials")
 }));
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-app.use("", require("./routes/notes.js"));
+
+
 app.use(express.json());
 app.use(bodyParser.json())
 app.set('view engine', 'handlebars');
+
+const routes = require('./routes/notes');
 
 
 // DB connections
@@ -114,7 +118,7 @@ app.post('/', body('date').notEmpty(), async (req, res) => {
 
 // PATCH note 
 
-app.patch("/api/notes/:id", async (req, res) => {
+/* app.patch("/api/notes/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id);
 
@@ -144,7 +148,7 @@ app.patch("/api/notes/:id", async (req, res) => {
         }
     }
 
-});
+}); */
 
 
 // Search TOMI

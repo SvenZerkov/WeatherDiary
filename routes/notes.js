@@ -16,9 +16,11 @@ router.get("/api/notes/(:id)", noteController.getNote);
 
 // delete note by id
 router.delete('/api/notes/:id', [
-    check('id').custom(validateId),
+    check('id').custom(validateId)
 ], noteController.deleteNote);
 
-
+router.patch('/api/notes/:id', [
+    check('id').custom(validateId)
+],noteController.updateNote);
 
 module.exports = router;

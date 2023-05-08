@@ -353,11 +353,17 @@
 
     // func to update note
     const updateNote = async (confirmed, noteId, noteData) => {
-      console.log("Note data passed to updateNote: ", noteData);
       console.log(`Note id received in updateNote function: ${noteId}`);
       if (confirmed) {
         try {
-          const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, noteData);
+          console.log("Note data passed to updateNote: ", noteData);
+
+          const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+          const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, JSON.stringify(noteData), config);
 
           if (response.status === 200) {
             alert("Note updated!");
