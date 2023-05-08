@@ -1,8 +1,8 @@
 // essential imports and requirements
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
-
-const { body, validationResult } = require('express-validator');
+const bodyParser = require('body-parser');
+const { body, check, param, validationResult } = require('express-validator');
 const mongoose = require('mongoose');
 const exphbs = require('express-handlebars');
 require('dotenv').config();
@@ -10,8 +10,10 @@ const path = require("path");
 const moment = require('moment');
 const Note = require("./models/Note");
 const { post } = require('./routes/notes.js');
+const { validateId } = require('./middleware/validators');
 const app = express();
 const ObjectId = mongoose.Types.ObjectId;
+const routes = require('./routes/notes');
 
 // middlewares and configuration
 app.use(express.urlencoded({ extended: false }));
@@ -24,6 +26,7 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use("", require("./routes/notes.js"));
 app.use(express.json());
+app.use(bodyParser.json())
 app.set('view engine', 'handlebars');
 
 
@@ -110,90 +113,37 @@ app.post('/', body('date').notEmpty(), async (req, res) => {
 });
 
 
-// get all
-// app.get("/api/notes/", async (req, res) => {
-//     try {
-//         const notes = await Note.find();
-//         res.json(notes);
-//     } catch (error) {
-//         res.status(404).json({
-//             msg: "Not found"
-//         })
-//     }
-// }); 
-
-// get one note
-
-app.get("/api/notes/(:id)", async (req, res, next) => {
-
-    try {
-
-        const id = req.params.id;
-
-        const note = await Note.findById(id);
-
-        res.json(note);
-    } catch (error) {
-        res.status(404).json({
-            msg: "Not found"
-        })
-    }
-});
-
-// DELETE note 
-
-app.delete("/api/notes/(:id)", async (req, res) => {
-    const id = req.params.id;
-
-
-    console.log(id);
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ msg: 'Invalid ID. Not ObjectId' });
-    }
-
-    try {
-        const delNote = await Note.findByIdAndDelete(id);
-        if (delNote) {
-            res.json({ msg: `Note-> ID: ${id} date: ${delNote.date}, temperature: ${delNote.temperature}, comment: '${delNote.comment}' deleted succesfully` })
-        } else {
-            res.status(404).json({ msg: `Note on id ${id} not found` })
-        }
-    } catch (error) {
-        res.status(500).json({ msg: error.message });
-    }
-});
-
 // Search TOMI
 
 
 app.get('/api/notes/', (req, res, next) => {
     const startDate = moment(req.query.startDate, 'YYYY-MM-DD').toDate();
     const endDate = moment(req.query.endDate, 'YYYY-MM-DD').toDate();
-  
+
     client.connect((err) => {
-      if (err) {
-        console.error(err);
-        return res.status(500).send('Failed to connect to database');
-      }
-  
-      const db = client.db('UserNotes');
-      const collection = db.collection('notes');
-  
-      collection.find({
-        date: {
-          $gte: startDate,
-          $lte: endDate,
-        },
-      }).toArray((err, data) => {
         if (err) {
-          console.error(err);
-          return res.status(500).send('Failed to fetch data from database');
+            console.error(err);
+            return res.status(500).send('Failed to connect to database');
         }
-  
-        res.json(data);
-      });
+
+        const db = client.db('UserNotes');
+        const collection = db.collection('notes');
+
+        collection.find({
+            date: {
+                $gte: startDate,
+                $lte: endDate,
+            },
+        }).toArray((err, data) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Failed to fetch data from database');
+            }
+
+            res.json(data);
+        });
     });
-  });
+});
 
 // CREATE note
 

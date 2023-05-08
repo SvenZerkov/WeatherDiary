@@ -62,41 +62,41 @@
     <div class="col-sm-12">
       <h3 class="text-headings">Personal entries</h3>
 
-<div class="date-view-container">
-<form action="/api/notes/" method="get">
-  <label for="startDate">Start Date:</label>
-  <input type="date" id="startDate" name="startDate">
+      <div class="date-view-container">
+        <form action="/api/notes/" method="get">
+          <label for="startDate">Start Date:</label>
+          <input type="date" id="startDate" name="startDate">
 
-  <label for="endDate">End Date:</label>
-  <input type="date" id="endDate" name="endDate">
+          <label for="endDate">End Date:</label>
+          <input type="date" id="endDate" name="endDate">
 
-  <input type="submit" value="Submit">
-</form>
+          <input type="submit" value="Submit">
+        </form>
 
-</div>
+      </div>
 
-{{!-- {{#if UserNotes}}
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Temperature</th>
-        <th>Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each UserNotes}}
-        <tr>
-          <td>{{this.date}}</td>
-          <td>{{this.temperature}}</td>
-          <td>{{this.comment}}</td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-{{else}}
-  <p>No notes found.</p>
-{{/if}} --}}
+      {{!-- {{#if UserNotes}}
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Temperature</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each UserNotes}}
+          <tr>
+            <td>{{this.date}}</td>
+            <td>{{this.temperature}}</td>
+            <td>{{this.comment}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{else}}
+      <p>No notes found.</p>
+      {{/if}} --}}
 
 
 
@@ -105,7 +105,7 @@
         see anything here, but you can see automatically retrieved weather data on the table a little bit higher from
         this message, that means you have not submitted any personal entries regarding this date. You can submit your
         own entries under 'Submit personal entries,' lower on this website.</p>
-      
+
       {{#if UserNotes}}
       <table id="scrollbar-table" class="table table-bordered" name="ShowPersonalEntries">
         <thead id="scrollbar-thead">
@@ -137,8 +137,8 @@
       </table>
 
       {{else}}
-  <p class="no-notes-found">No notes found.</p>
-{{/if}}
+      <p class="no-notes-found">No notes found.</p>
+      {{/if}}
     </div>
   </div>
   <div class="col-sm-4"></div>
@@ -194,7 +194,8 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger yes-delete" aria-label="Yes - delete">Yes</button>
-          <button type="button" class="btn btn-default no-delete" data-dismiss="modal" aria-label="No - do not delete">No</button>
+          <button type="button" class="btn btn-default no-delete" data-dismiss="modal"
+            aria-label="No - do not delete">No</button>
         </div>
       </div>
     </div>
@@ -321,11 +322,6 @@
       });
     });
   </script>
-
-
-
-  {{!-- TOMI --}}
-
 
 
   {{!-- script for event listener on update button --}}
@@ -474,7 +470,7 @@
   </script>
 
 
-{{!-- Käyttäjän täyttämän lomakkeen validointi --}}
+  {{!-- Käyttäjän täyttämän lomakkeen validointi --}}
   <script>
     function validateForm() {
       let x = document.forms["addComment"]["temperature"].value;
