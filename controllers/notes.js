@@ -1,7 +1,7 @@
 const express = require('express');
 const Note = require('../models/Note');
 const { validationResult } = require('express-validator');
-
+const bodyParser = require('body-parser');
 
 // get all notes
 const getAll = async (req, res) => {
@@ -49,42 +49,12 @@ const deleteNote = async (req, res) => {
     }
 };
 
-const updateNote = async (req, res) => {
-    const id = req.params.id;
-    console.log(id);
 
-    if (!req.body) {
-        res.status(400).json(
-            {
-                msg: "Body is empty"
-            }
-        )
-    } else {
-        const noteToUpdate = {
-            temperature: req.body.temperature,
-            comment: req.body.comment
-        };
-
-        const updatedNote = await Note.findByIdAndUpdate(id, noteToUpdate, { new: true });
-
-        if (updatedNote) {
-            res.json(
-                {
-                    msg: "note updated",
-                    updatedNote
-                }
-            );
-        } else {
-            return res.status(400).json({ msg: "no note on that id" });
-        }
-    }
-};
 
 // export
 module.exports = {
     deleteNote,
     getAll,
-    getNote,
-    updateNote
+    getNote
 }
 

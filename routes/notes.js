@@ -19,11 +19,6 @@ router.delete('/api/notes/:id', [
     check('id').custom(validateId),
 ], noteController.deleteNote);
 
-// update note
-router.patch('/api/notes/:id', [
-    check('temperature').trim().notEmpty().isNumeric().withMessage('Temperature should be number'),
-    check('comment').trim().notEmpty().withMessage('Comment is required'),
-    check('id').trim().custom(validateId)
-], noteController.updateNote);
+
 
 module.exports = router;
