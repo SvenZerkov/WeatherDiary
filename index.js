@@ -166,7 +166,7 @@ app.delete("/api/notes/(:id)", async (req, res) => {
 // Search TOMI
 
 
-app.get('/api/notes/', (req, res, next) => {
+app.post('/api/notes/', (req, res, next) => {
     const startDate = moment(req.query.startDate, 'YYYY-MM-DD').toDate();
     const endDate = moment(req.query.endDate, 'YYYY-MM-DD').toDate();
   
