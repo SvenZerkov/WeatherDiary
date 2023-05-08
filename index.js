@@ -114,7 +114,7 @@ app.post('/', body('date').notEmpty(), async (req, res) => {
 
 // PATCH note 
 
-app.patch("/api/notes/:id", async (req, res) => {
+/* app.patch("/api/notes/:id", async (req, res) => {
     const id = req.params.id;
     console.log(id);
 
@@ -144,7 +144,7 @@ app.patch("/api/notes/:id", async (req, res) => {
         }
     }
 
-});
+}); */
 
 
 // Search TOMI
