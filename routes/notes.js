@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator');
 const { validateId } = require('../middleware/validators');
-const { deleteNote } = require('../controllers/notes');
+const { deleteNote, updateNote } = require('../controllers/notes');
+
 
 const noteController = require("../controllers/notes.js");
 
@@ -29,6 +30,10 @@ router.delete('/api/notes/:id', [
 ], deleteNote);
 
 // update note
-
+router.patch('api/notes/:id', [
+    check('temperature').trim().notEmpty().isNumeric().withMessage('Temperature should be number'),
+    check('comment').trim().notEmpty().withMessage('Comment is required'),
+    check('id').trim().custom(validateId)
+], updateNote);
 
 module.exports = router;
