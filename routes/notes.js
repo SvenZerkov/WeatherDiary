@@ -7,16 +7,6 @@ const { deleteNote, updateNote } = require('../controllers/notes');
 
 const noteController = require("../controllers/notes.js");
 
-/* const MongoClient = require('mongodb').MongoClient;
-const dbURI = process.env.dbURI;
-const client = new MongoClient(dbURI, { useNewUrlParser: true }); */
-
-/* 
-router.get("/", noteController.home); 
-router.post("/", noteController.newHome);
-router.get("/api/notes/(:id)", noteController.getNote);
-router.get("/api/notes", noteController.getAll);
-*/
 
 // get all notes
 router.get("/api/notes", noteController.getAll);
