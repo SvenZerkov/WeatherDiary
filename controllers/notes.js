@@ -49,12 +49,46 @@ const deleteNote = async (req, res) => {
     }
 };
 
+const updateNote = async (req, res) => {
+    const { id } = req.params;
+    console.log("id in here is ", id);
+    console.log("body in here is ", req.body);
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    const noteToUpdate = {
+        temperature: req.body.temperature,
+        comment: req.body.comment
+    };
+
+    try {
+        const updatedNote = await Note.findByIdAndUpdate(id, noteToUpdate, { new: true });
+        if (updatedNote) {
+            res.json(
+                {
+                    msg: "note updated",
+                    updatedNote
+                }
+            );
+        } else {
+            return res.status(400).json({ msg: "no note on that id" });
+        }
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
+};
+
+
 
 
 // export
 module.exports = {
     deleteNote,
     getAll,
-    getNote
+    getNote,
+    updateNote
 }
 
