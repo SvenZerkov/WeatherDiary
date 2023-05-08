@@ -112,6 +112,40 @@ app.post('/', body('date').notEmpty(), async (req, res) => {
 
 });
 
+// PATCH note 
+
+app.patch("/api/notes/:id", async (req, res) => {
+    const id = req.params.id;
+    console.log(id);
+
+    if (!req.body) {
+        res.status(400).json(
+            {
+                msg: "Body is empty"
+            }
+        )
+    } else {
+        const noteToUpdate = {
+            temperature: req.body.temperature,
+            comment: req.body.comment
+        };
+
+        const updatedNote = await Note.findByIdAndUpdate(id, noteToUpdate, { new: true });
+
+        if (updatedNote) {
+            res.json(
+                {
+                    msg: "note updated",
+                    updatedNote
+                }
+            );
+        } else {
+            return res.status(400).json({ msg: "no note on that id" });
+        }
+    }
+
+});
+
 
 // Search TOMI
 
