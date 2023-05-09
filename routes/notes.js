@@ -36,8 +36,11 @@ router.patch('/api/notes/:id', [
     .isNumeric()
     .withMessage("Temperature must be numeric value"),
     check('comment')
-    .optional()
     .trim()
+    .isLength({ min: 2, max:200 })
+    .withMessage("Comment must be between 2 and 200 characters")
+    .isAlphanumeric()
+    .withMessage("Comment can only contain alphanumeric characters")
 
     
 ],noteController.updateNote);

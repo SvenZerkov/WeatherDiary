@@ -373,6 +373,12 @@
           }
         } catch (error) {
           console.error(error);
+          if (error.response && error.response.data && error.response.data.errors) {
+            const errorMessages = error.response.data.errors.map((error) => error.msg);
+            alert(`Error updating note: ${errorMessages.join(", ")}`);
+          } else {
+            alert("Error updating note. Please try again later.");
+          }
         }
 
       } else {
