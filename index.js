@@ -17,7 +17,7 @@ const ObjectId = mongoose.Types.ObjectId;
 
 // middlewares and configuration
 app.use(express.static('public'));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("", require("./routes/notes.js"));
 
