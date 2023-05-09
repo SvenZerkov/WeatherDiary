@@ -20,15 +20,11 @@ app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("", require("./routes/notes.js"));
-
 app.engine('handlebars', exphbs.engine({
     defaultLayout: 'main',
     partialsDir: path.join(__dirname, "views/partials")
 }));
-
-
 app.use(express.json());
-app.use(bodyParser.json())
 app.set('view engine', 'handlebars');
 
 const routes = require('./routes/notes');
