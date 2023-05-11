@@ -67,36 +67,36 @@
   <label for="startDate">Start Date:</label>
   <input type="date" id="startDate" name="startDate">
 
-  <label for="endDate">End Date:</label>
-  <input type="date" id="endDate" name="endDate">
+          <label for="endDate">End Date:</label>
+          <input type="date" id="endDate" name="endDate">
 
-  <input type="submit" value="Submit">
-</form>
+          <input type="submit" value="Submit">
+        </form>
 
-</div>
+      </div>
 
-{{!-- {{#if UserNotes}}
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Temperature</th>
-        <th>Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each UserNotes}}
-        <tr>
-          <td>{{this.date}}</td>
-          <td>{{this.temperature}}</td>
-          <td>{{this.comment}}</td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-{{else}}
-  <p>No notes found.</p>
-{{/if}} --}}
+      {{!-- {{#if UserNotes}}
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Temperature</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each UserNotes}}
+          <tr>
+            <td>{{this.date}}</td>
+            <td>{{this.temperature}}</td>
+            <td>{{this.comment}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      {{else}}
+      <p>No notes found.</p>
+      {{/if}} --}}
 
 
 
@@ -105,7 +105,7 @@
         see anything here, but you can see automatically retrieved weather data on the table a little bit higher from
         this message, that means you have not submitted any personal entries regarding this date. You can submit your
         own entries under 'Submit personal entries,' lower on this website.</p>
-      
+
       {{#if UserNotes}}
       <table id="scrollbar-table" class="table table-bordered" name="ShowPersonalEntries">
         <thead id="scrollbar-thead">
@@ -137,8 +137,8 @@
       </table>
 
       {{else}}
-  <p class="no-notes-found">No notes found.</p>
-{{/if}}
+      <p class="no-notes-found">No notes found.</p>
+      {{/if}}
     </div>
   </div>
   <div class="col-sm-4"></div>
@@ -194,7 +194,8 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger yes-delete" aria-label="Yes - delete">Yes</button>
-          <button type="button" class="btn btn-default no-delete" data-dismiss="modal" aria-label="No - do not delete">No</button>
+          <button type="button" class="btn btn-default no-delete" data-dismiss="modal"
+            aria-label="No - do not delete">No</button>
         </div>
       </div>
     </div>
@@ -323,11 +324,6 @@
   </script>
 
 
-
-  {{!-- TOMI --}}
-
-
-
   {{!-- script for event listener on update button --}}
   <script>
     // func to confirm update
@@ -357,11 +353,17 @@
 
     // func to update note
     const updateNote = async (confirmed, noteId, noteData) => {
-      console.log("Note data passed to updateNote: ", noteData);
       console.log(`Note id received in updateNote function: ${noteId}`);
       if (confirmed) {
         try {
-          const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, noteData);
+          console.log("Note data passed to updateNote: ", noteData);
+
+          const config = {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          };
+          const response = await axios.patch(`http://localhost:3000/api/notes/${noteId}`, JSON.stringify(noteData), config);
 
           if (response.status === 200) {
             alert("Note updated!");
@@ -371,6 +373,12 @@
           }
         } catch (error) {
           console.error(error);
+          if (error.response && error.response.data && error.response.data.errors) {
+            const errorMessages = error.response.data.errors.map((error) => error.msg);
+            alert(`Error updating note: ${errorMessages.join(", ")}`);
+          } else {
+            alert("Error updating note. Please try again later.");
+          }
         }
 
       } else {
@@ -474,7 +482,7 @@
   </script>
 
 
-{{!-- Käyttäjän täyttämän lomakkeen validointi --}}
+  {{!-- Käyttäjän täyttämän lomakkeen validointi --}}
   <script>
     function validateForm() {
       let x = document.forms["addComment"]["temperature"].value;
